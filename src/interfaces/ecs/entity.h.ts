@@ -1,11 +1,25 @@
+import { IAwake, IUpdate } from "../lifecycle/lifecycle.h"
 import IComponent from "./component.h"
 
 type constr<T> = new (...args: any[]) => T
 
-export default abstract class Entity {
+export default abstract class Entity implements IUpdate, IAwake {
 
     protected _components : IComponent[] = []
 
+	// Game Loop
+
+	public update(deltaTime: number): void {
+		for (const component of this._components) {
+			component.update(deltaTime)
+		}
+	}
+
+	public awake(): void {
+		for (const component of this._components) {
+			component.awake()
+		}
+	}
 
 	// Components 
 

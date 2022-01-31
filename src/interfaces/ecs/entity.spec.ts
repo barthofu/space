@@ -6,14 +6,20 @@ class E extends Entity {}
 class C1 implements IComponent { 
     entity: E
     name: string = 'C1' 
+    update = (_deltaTime: number) => {}
+    awake = () => {}
 }
 class C2 implements IComponent { 
     entity: E
     name: string = 'C2' 
+    update = (_deltaTime: number) => {}
+    awake = () => {}
 }
 class C3 implements IComponent { 
     entity: E 
     name: string = 'C3' 
+    update = (_deltaTime: number) => {}
+    awake = () => {}
 }
 
 describe('Entity and components', () => {

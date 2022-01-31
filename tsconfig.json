@@ -20,8 +20,10 @@
         "paths": {
             "@/*": ["./src/*"],
             "@styles/*": ["./src/styles/*"],
-			"@configs/*": ["./configs/*"]
+			"@configs/*": ["./configs/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@interfaces/*": ["./src/interfaces/*"]
         }
 	},
-	"include": ["./src", "configs", "index.ts", "./public"]
+	"include": ["./src", "configs", "main.ts", "./public"]
 }
