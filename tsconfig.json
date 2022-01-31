@@ -13,6 +13,8 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"noImplicitReturns": true,
+		"strictPropertyInitialization": false,
+		"types": ["node", "jest"],
 
 		"baseUrl": ".",
         "paths": {
