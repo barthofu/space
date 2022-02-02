@@ -1,5 +1,5 @@
 export * from './ShapeRender'
-export * from './Camera'
+export * from './Controllable'
 export * from './Collider'
 export * from './Position'
 export * from './Health'

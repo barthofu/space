@@ -11,6 +11,10 @@ ctx.canvas.height = gameConfig.window.height
 
 globalThis.game = new Game()
 globalThis.ctx = ctx
+globalThis.pressedKeys = {}
+
+window.onkeydown = (e) => pressedKeys[e.key] = true
+window.onkeyup = (e) => pressedKeys[e.key] = false
 
 new Map().generate()
 game.awake()

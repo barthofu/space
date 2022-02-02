@@ -1,5 +1,5 @@
 import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer } from '@systems'
+import { Renderer, ControlPlayer } from '@systems'
 
 import { Entity, System } from '@ecs'
 
@@ -13,7 +13,8 @@ export class Game extends Entity {
 
     ]
     public systems: System[] = [
-        new Renderer(this)
+        new Renderer(this),
+        new ControlPlayer(this)
     ]
 
     public awake(): void {

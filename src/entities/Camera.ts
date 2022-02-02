@@ -1,5 +1,5 @@
 import { Entity } from '@ecs'
-import { Position, Size } from '@components'
+import { Controllable, Position, Size } from '@components'
 
 import { gameConfig, mapConfig } from '@configs'
 
@@ -18,7 +18,8 @@ export class Camera extends Entity {
             new Size(
                 gameConfig.window.width,    // width
                 gameConfig.window.height    // height
-            )
+            ),
+            new Controllable()
         ]
     }
 }

@@ -6,7 +6,7 @@ export class CollisionsManager extends System {
 
     }
 
-    public update() {
+    public run() {
         
     }
 

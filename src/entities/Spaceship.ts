@@ -4,7 +4,8 @@ import {
     Collider,
     ShapeRender,
     Health,
-    Size
+    Size,
+    Controllable
 } from '@components'
 import { mapConfig } from '@configs'
 
@@ -19,6 +20,7 @@ export class Spaceship extends Entity {
                 mapConfig.size.height / 2     // y
             ),
             new Size(30, 30),
+            new Controllable(),
             new ShapeRender('triangle', 'red'),
             new Collider(),
             new Health(100)
