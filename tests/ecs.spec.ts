@@ -1,21 +1,20 @@
-import Entity from './entity.h'
-import IComponent from './component.h'
+import { Entity, Component } from '../src/core/ecs/index'
 
 class E extends Entity {}
 
-class C1 implements IComponent { 
+class C1 extends Component { 
     entity: E
     name: string = 'C1' 
     update = (_deltaTime: number) => {}
     awake = () => {}
 }
-class C2 implements IComponent { 
+class C2 extends Component { 
     entity: E
     name: string = 'C2' 
     update = (_deltaTime: number) => {}
     awake = () => {}
 }
-class C3 implements IComponent { 
+class C3 extends Component { 
     entity: E 
     name: string = 'C3' 
     update = (_deltaTime: number) => {}

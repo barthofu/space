@@ -1,11 +1,10 @@
-import { IAwake, IUpdate } from "../lifecycle/lifecycle.h"
-import IComponent from "./component.h"
+import { IAwake, IUpdate } from "@interfaces/lifecycle/lifecycle.h"
+import { Component } from "./Component"
 
-type constr<T> = new (...args: any[]) => T
+export abstract class Entity implements IUpdate, IAwake {
 
-export default abstract class Entity implements IUpdate, IAwake {
-
-    protected _components : IComponent[] = []
+    protected _components : Component[] = []
+	protected tag: string | undefined
 
 	// Game Loop
 
@@ -21,30 +20,41 @@ export default abstract class Entity implements IUpdate, IAwake {
 		}
 	}
 
+	// Tag
+
+	public setTag(tag: string): void {
+		this.tag = tag
+	}
+
+	public getTag(): string | undefined {
+		return this.tag
+	}
+
 	// Components 
 
-    public get components() : IComponent[] {
+    public get components() : Component[] {
         return this._components
     }
 
-    public addComponent(component : IComponent) {
+    public addComponent(component : Component) {
         component.entity = this
         this._components.push(component)
     }
     
-    public getComponent<C extends IComponent>(constr: constr<C>): C {
+    public getComponent<C extends Component>(constr: constr<C>): C | undefined {
 		
 		for (const component of this._components) {
 			if (component instanceof constr) {
 				return component as C
 			}
 		}
-		throw new Error(`Component ${constr.name} not found on Entity ${this.constructor.name}`)
+		// throw new Error(`Component ${constr.name} not found on Entity ${this.constructor.name}`)
+		return undefined
 	}
 
-	public removeComponent<C extends IComponent>(constr: constr<C>): void {
+	public removeComponent<C extends Component>(constr: constr<C>): void {
 
-		let toRemove: IComponent | undefined
+		let toRemove: Component | undefined
 		let index: number | undefined
 	
 		for (let i = 0; i < this._components.length; i++) {
@@ -62,7 +72,7 @@ export default abstract class Entity implements IUpdate, IAwake {
 		}
 	}
 
-	public hasComponent<C extends IComponent>(constr: constr<C>): boolean {
+	public hasComponent<C extends Component>(constr: constr<C>): boolean {
 		for (const component of this._components) {
 			if (component instanceof constr) {
 				return true

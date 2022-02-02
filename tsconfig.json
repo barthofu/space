@@ -20,10 +20,16 @@
         "paths": {
             "@/*": ["./src/*"],
             "@styles/*": ["./src/styles/*"],
-			"@configs/*": ["./configs/*"],
-			"@utils/*": ["./src/utils/*"],
-			"@interfaces/*": ["./src/interfaces/*"]
+			"@interfaces/*": ["./src/interfaces/*"],
+			
+			"@utils": ["./src/utils/"],
+			"@configs": ["./configs/"],
+			"@ecs": ["./src/core/ecs/"],
+			"@components": ["./src/components/"],
+			"@entities": ["./src/entities/"],
+			"@systems": ["./src/systems/"]
         }
 	},
-	"include": ["./src", "configs", "main.ts", "./public"]
+	"include": ["./src", "configs", "main.ts", "./public", "tests/ecs.spec.ts"],
+	"paths": ["node_modules/*", "src/types/*"]
 }

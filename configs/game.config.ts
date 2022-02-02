@@ -1,6 +1,6 @@
-export default {
+export const gameConfig = {
 
-    screen: {
+    window: {
 
         width: window.innerWidth,
         height: window.innerHeight

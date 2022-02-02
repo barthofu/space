@@ -1,11 +1,16 @@
-import config from '@configs/game'
+import { gameConfig } from '@configs'
 import '@styles/main.scss'
-import Game from '@/core/Game'
+import { Game } from '@/core/Game'
+import { Map } from '@/core/Map'
 
 const canvas = <HTMLCanvasElement> document.querySelector("#game")
 const ctx = canvas.getContext("2d")!
 
-ctx.canvas.width = config.screen.width
-ctx.canvas.height = config.screen.height
+ctx.canvas.width = gameConfig.window.width
+ctx.canvas.height = gameConfig.window.height
 
-new Game().awake()
+globalThis.game = new Game()
+globalThis.ctx = ctx
+
+new Map().generate()
+game.awake()
