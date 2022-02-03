@@ -1,22 +1,27 @@
-import { Entity, System } from "@ecs"
+import { System } from "@ecs"
 import { Position, Controllable } from "@components"
 import { controlsConfig } from '@configs'
 
 export class ControlPlayer extends System {
 
-    protected requiredComponents = [
-        Position,
-        Controllable
-    ]
+    public update(_deltaTime: number): void {
 
-    public run(entity: Entity) {
+        for (const entity of this.engine.entities) {
 
-        const position = entity.getComponent(Position)!
+            if (entity.matchComponents([Position, Controllable], [])) {
 
-        position.x += (pressedKeys[controlsConfig.right]) ? 1 : 0
-        position.x -= (pressedKeys[controlsConfig.left]) ? 1 : 0
-        position.y += (pressedKeys[controlsConfig.down]) ? 1 : 0
-        position.y -= (pressedKeys[controlsConfig.up]) ? 1 : 0
+                const position = entity.getComponent(Position)!
+
+                position.x += (pressedKeys[controlsConfig.right]) ? 1 : 0
+                position.x -= (pressedKeys[controlsConfig.left]) ? 1 : 0
+                position.y += (pressedKeys[controlsConfig.down]) ? 1 : 0
+                position.y -= (pressedKeys[controlsConfig.up]) ? 1 : 0
+
+                if (pressedKeys[controlsConfig.debug]) {
+                    console.log(this.engine)
+                }
+            }
+        }
     }
 
 }

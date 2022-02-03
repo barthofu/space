@@ -18,16 +18,17 @@
 
 		"baseUrl": ".",
         "paths": {
-            "@/*": ["./src/*"],
-            "@styles/*": ["./src/styles/*"],
-			"@interfaces/*": ["./src/interfaces/*"],
-			
+			"@interfaces": ["./src/interfaces/"],
 			"@utils": ["./src/utils/"],
 			"@configs": ["./configs/"],
 			"@ecs": ["./src/core/ecs/"],
 			"@components": ["./src/components/"],
 			"@entities": ["./src/entities/"],
-			"@systems": ["./src/systems/"]
+			"@systems": ["./src/systems/"],
+			
+            "@/*": ["./src/*"],
+			"@core/*": ["./src/core/*"],
+            "@styles/*": ["./src/styles/*"]
         }
 	},
 	"include": ["./src", "configs", "main.ts", "./public", "tests/ecs.spec.ts"],

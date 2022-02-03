@@ -1,57 +1,54 @@
-import { Entity, System } from "@ecs"
-import { ShapeRender, Size, Position } from "@components"
+import { System } from "@ecs"
+import { ShapeRender, Position, Hidden } from "@components"
 import { convertCoordinates } from '@utils'
+import { gameConfig } from '@configs'
 
 export class Renderer extends System {
 
-    protected requiredComponents = [
-        Position,
-        Size
-    ]
-    private cameraPosition: Position
-    private cameraSize: Size
 
-
-
-    public beforeRun(): boolean {
-
-        const camera = this._game.getEntitiesByTag('mainCamera')[0]
-
-        this.cameraPosition = camera.getComponent(Position)!
-        this.cameraSize = camera.getComponent(Size)!
+    public update(_deltaTime: number): void {
+        
+        const camera = this.engine.getEntitiesByTag('mainCamera')[0],
+              cameraPosition = camera.getComponent(Position)!
 
         // we first clear the canvas for redrawing
-        ctx.clearRect(0, 0, this.cameraSize.width, this.cameraSize.height)
+        ctx.clearRect(0, 0, gameConfig.window.width, gameConfig.window.height)
 
-        return true
-    }
+        for (const entity of this.engine.entities) {
 
+             // looking if they have the components to render them
+            if (entity.matchComponents([ShapeRender, Position], [Hidden])) {
 
+                const entityPosition = entity.getComponent(Position)!,
+                      shapeRender = entity.getComponent(ShapeRender)
 
-    public run(entity: Entity) {
+                // convertion from world positions to canvas position
+                const position: coordinates = convertCoordinates(entityPosition, cameraPosition, gameConfig.window)
 
-        // looking if they have the components to render them
-        const entityPosition = entity.getComponent(Position),
-                size = entity.getComponent(Size),
-                shapeRender = entity.getComponent(ShapeRender)/*,
-                spriteRender = entity.getComponent(SpriteRender)*/
-
-        if (entityPosition && size) {
-
-            // convertion from world positions to canvas position
-            const position: coordinates = convertCoordinates(entityPosition, this.cameraPosition, this.cameraSize)
-        
-            if (shapeRender) {
-                if (shapeRender.shape === 'triangle') this.drawTriangle({ position, size, color: shapeRender.color })
-                else if (shapeRender.shape === 'circle') this.drawCircle({ position, size, color: shapeRender.color })
+                if (shapeRender) {
+                    if (shapeRender.shape === 'triangle') 
+                        this.drawTriangle({ 
+                            position, 
+                            color: shapeRender.color, 
+                            size: {
+                                width: shapeRender.options[0],
+                                height: shapeRender.options[1]
+                            }
+                        })
+                    else if (shapeRender.shape === 'circle') 
+                        this.drawCircle({ 
+                            position, 
+                            color: shapeRender.color, 
+                            radius: shapeRender.options[0]
+                        })
+                }
+                    
             }
-            
         }
     }
 
 
-
-    private drawTriangle({ position, size, color }: { position: coordinates, size: Size, color: string }) {
+    private drawTriangle({ position, color, size }: { position: coordinates, color: string, size: size }) {
 
         ctx.beginPath()
 
@@ -74,7 +71,7 @@ export class Renderer extends System {
 
 
 
-    private drawCircle({ position, size, color }: { position: coordinates, size: Size, color: string }) {
+    private drawCircle({ position, color, radius }: { position: coordinates, color: string, radius: number }) {
 
         ctx.beginPath()
 
@@ -82,7 +79,7 @@ export class Renderer extends System {
         ctx.arc(
             position.x,
             position.y,
-            size.width / 2,
+            radius,
             0,
             2 * Math.PI
         )

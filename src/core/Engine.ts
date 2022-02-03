@@ -1,29 +1,24 @@
 import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer, ControlPlayer } from '@systems'
+import { Renderer, ControlPlayer, CollisionsManager, CenterCamera } from '@systems'
 
 import { Entity, System } from '@ecs'
 
-export class Game extends Entity {
+export default class Engine extends Entity {
 
     private _lastTimestamp = 0
     public entities: Entity[] = [
         new Spaceship(),
         new Camera(true),
-        new Asteroid()
-
+        new Asteroid(100, { x: 5380, y: 4950 }),
     ]
     public systems: System[] = [
+        new ControlPlayer(this),
+        new CollisionsManager(this),
+        new CenterCamera(this),
         new Renderer(this),
-        new ControlPlayer(this)
     ]
 
     public awake(): void {
-        super.awake()
-
-        // awake all the child entities
-        for (const entity of this.entities) {
-            entity.awake()
-        }
 
         // awake all the systems
         for (const system of this.systems) {
@@ -46,18 +41,10 @@ export class Game extends Entity {
         
         // calculate the time passed since last update
         const deltaTime = (Date.now() - this._lastTimestamp) / 1000
-        
-        // call update on all the entities
-        super.update(deltaTime)
-
-        // call update on all the child entities
-        for (const entity of this.entities) {
-            entity.update(deltaTime)
-        }
 
         // call update on all the systems
         for (const system of this.systems) {
-            system.update()
+            system.update(deltaTime)
         }
 
         // update the current timestamp
@@ -75,13 +62,28 @@ export class Game extends Entity {
 
 
 
-    // Utils
+    // Entities
 
-    public getEntitiesByTag(tag: string): Entity[] {
-        return this.entities.filter(entity => entity.getTag() === tag)
+    public addEntity(entity: Entity): void {
+        this.entities.push(entity)
     }
 
-    public getEntities<C extends Entity>(constr: constr<C>): C[] {
+    public removeEntity(entity: Entity): void {
+        const index = this.entities.indexOf(entity)
+        if (index !== -1) {
+            this.entities.splice(index, 1)
+        }
+    }
+
+    public getEntitiesByTag(tag: string): Entity[] {
+        return this.entities.filter(entity => entity.tag === tag)
+    }
+
+    public getEntityById(id: string): Entity | undefined {
+        return this.entities.find(entity => entity.id === id)
+    }
+
+    public getEntities<C extends Entity>(constr: Class<C>): C[] {
         return this.entities.filter(entity => entity instanceof constr) as C[]
     }
     

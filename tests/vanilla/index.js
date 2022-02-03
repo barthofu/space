@@ -1,35 +1,20 @@
-class Foo {
+const { System, Circle } = require('detect-collisions')
 
-    constructor(bar) {
-        this.bar = bar;
-    }
+const system = new System()
 
-    getBar() {
-        return this.bar;
-    }
+const planet = new Circle({ x: 100, y: 100 }, 10);
+const spaceship = new Circle({ x: 80, y: 80 }, 2);
+const asteroid1 = new Circle({ x: 50, y: 50 }, 5);
+const asteroid2 = new Circle({ x: 110, y: 110 }, 5);
 
-    setBar(bar) {
-        this.bar = bar;
-    }
+system.insert(planet);
+system.insert(spaceship);
+system.insert(asteroid1);
+system.insert(asteroid2);
 
-}
+system.update()
 
+system.checkAll(res => {
+    console.log(res)
+})
 
-class System {
-
-    constructor(foo) {
-        this.foo = foo;
-    }
-
-    setBar(i) {
-        this.foo.setBar(i);
-    }
-}
-
-
-
-const foo = new Foo(1);
-const system = new System(foo);
-console.log(foo.getBar());
-system.setBar(10);
-console.log(foo.getBar());

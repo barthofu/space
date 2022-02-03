@@ -3,20 +3,16 @@ import { Entity } from "@ecs"
 
 export class Asteroid extends Entity {
 
-    constructor() {
+    constructor(size: number, position: coordinates) {
         super()
 
         this._components = [
             new Position(
-                5400,
-                4800
+                position.x,
+                position.y
             ),
-            new Size(
-                100,
-                100
-            ),
-            new ShapeRender('circle', 'white'),
-            new Collider()
+            new ShapeRender('circle', 'white', [size / 2]),
+            new Collider(size / 2)
         ]
     }
 }

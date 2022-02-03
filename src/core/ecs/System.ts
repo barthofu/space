@@ -1,34 +1,18 @@
-import { Component, Entity } from '@ecs'
-import { Game } from "@/core/Game"
-import { IUpdate, IAwake } from "@interfaces/lifecycle/lifecycle.h"
+import Engine from "@core/Engine"
+import { Component } from '@ecs'
+import { IUpdate, IAwake } from "@interfaces"
 
 export abstract class System implements IUpdate, IAwake {
 
-    protected _game: Game
-    protected requiredComponents: constr<Component>[] 
+    protected engine: Engine
+    protected requiredComponents: Class<Component>[] 
 
-    constructor(game: Game) {
-        this._game = game
-    }
-
-    public update(): void {
-
-        if (this.beforeRun()) {
-        
-            for (const entity of this._game.entities) {
-                const hasAllComponents = this.requiredComponents.every(component => entity.hasComponent(component))
-
-                if (hasAllComponents) this.run(entity)
-            }
-        }
+    constructor(engine: Engine) {
+        this.engine = engine
     }
 
     public awake(): void {}
 
-    protected beforeRun(): boolean {
+    public abstract update(_deltaTime: number): void
 
-        return true
-    }
-    
-    protected abstract run(entity: Entity): void
 }

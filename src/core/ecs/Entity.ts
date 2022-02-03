@@ -1,33 +1,32 @@
-import { IAwake, IUpdate } from "@interfaces/lifecycle/lifecycle.h"
 import { Component } from "./Component"
+import { v4 as uuidv4 } from "uuid"
 
-export abstract class Entity implements IUpdate, IAwake {
+export abstract class Entity {
 
     protected _components : Component[] = []
-	protected tag: string | undefined
+	protected _id: string = uuidv4()
+	protected _tag: string | undefined
 
-	// Game Loop
 
-	public update(deltaTime: number): void {
-		for (const component of this._components) {
-			component.update(deltaTime)
-		}
+	// Id
+	
+	public get id(): string {
+		return this._id
 	}
 
-	public awake(): void {
-		for (const component of this._components) {
-			component.awake()
-		}
+	public set id(id: string) {
+		this._id = id
 	}
 
 	// Tag
 
-	public setTag(tag: string): void {
-		this.tag = tag
+	public set tag(tag: string) {
+		this._tag = tag
 	}
 
-	public getTag(): string | undefined {
-		return this.tag
+	public get tag(): string {
+		if (!this._tag) return ''
+		return this._tag
 	}
 
 	// Components 
@@ -41,7 +40,7 @@ export abstract class Entity implements IUpdate, IAwake {
         this._components.push(component)
     }
     
-    public getComponent<C extends Component>(constr: constr<C>): C | undefined {
+    public getComponent<C extends Component>(constr: Class<C>): C | undefined {
 		
 		for (const component of this._components) {
 			if (component instanceof constr) {
@@ -52,7 +51,7 @@ export abstract class Entity implements IUpdate, IAwake {
 		return undefined
 	}
 
-	public removeComponent<C extends Component>(constr: constr<C>): void {
+	public removeComponent<C extends Component>(constr: Class<C>): void {
 
 		let toRemove: Component | undefined
 		let index: number | undefined
@@ -72,13 +71,21 @@ export abstract class Entity implements IUpdate, IAwake {
 		}
 	}
 
-	public hasComponent<C extends Component>(constr: constr<C>): boolean {
+	public hasComponent<C extends Component>(constr: Class<C>): boolean {
 		for (const component of this._components) {
 			if (component instanceof constr) {
 				return true
 			}
 		}
 		return false
+	}
+
+	public matchComponents(includes: any[], excludes: any[]): boolean {
+		
+		const hasRequiredComponents = includes.every(component => this.hasComponent(component))
+		const hasNotExcludedComponents = excludes.every(component => !this.hasComponent(component))
+
+		return hasRequiredComponents && hasNotExcludedComponents
 	}
 
 }

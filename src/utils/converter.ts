@@ -1,6 +1,6 @@
-import { Position, Size } from '@components'
+import { Position } from '@components'
 
-export function convertCoordinates (entityPosition: Position, cameraPosition: Position, cameraSize: Size): coordinates {
+export function convertCoordinates (entityPosition: Position, cameraPosition: Position, cameraSize: size): coordinates {
 
     const newPosition = {
         x: entityPosition.x - (cameraPosition.x - cameraSize.width / 2),

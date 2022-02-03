@@ -4,5 +4,11 @@ export const gameConfig = {
 
         width: window.innerWidth,
         height: window.innerHeight
+    },
+
+    spaceship: {
+
+        size: 30,
+        health: 100
     }
 }
