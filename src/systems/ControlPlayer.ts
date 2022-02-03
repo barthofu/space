@@ -1,6 +1,7 @@
 import { System } from "@ecs"
 import { Transform, Controllable } from "@components"
-import { controlsConfig } from '@configs'
+import { controlsConfig, physicsConfig } from '@configs'
+import { degreesToRadians } from "@utils/functions"
 
 export class ControlPlayer extends System {
 
@@ -12,24 +13,34 @@ export class ControlPlayer extends System {
 
                 const transform = entity.getComponent(Transform)!
 
-                this.moveEntity(transform)
-                this.orientateEntity(transform)
+                this.applyForwardImpulse(transform, _deltaTime)
+                this.applyAngularImpulse(transform, _deltaTime)
             }
         }
     }
 
-    public moveEntity(transform: Transform): void {
+    public applyForwardImpulse(transform: Transform, deltaTime: number): void {
 
-        transform.position.x += (pressedKeys[controlsConfig.right]) ? 1 : 0
-        transform.position.x -= (pressedKeys[controlsConfig.left]) ? 1 : 0
-        transform.position.y += (pressedKeys[controlsConfig.down]) ? 1 : 0
-        transform.position.y -= (pressedKeys[controlsConfig.up]) ? 1 : 0
+        const thrust = (pressedKeys[controlsConfig.up]) ? 1 : (pressedKeys[controlsConfig.down] ? -0.25 : 0),
+              angle = -degreesToRadians(transform.rotation)
+
+        // apply thrust
+        transform.velocity.x -= thrust * Math.sin(angle) * physicsConfig.speed.acceleration * deltaTime
+        transform.velocity.y -= thrust * Math.cos(angle) * physicsConfig.speed.acceleration * deltaTime 
+
+        // apply deceleration
+        transform.velocity.x *= physicsConfig.speed.deceleration
+        transform.velocity.y *= physicsConfig.speed.deceleration
     }
 
-    public orientateEntity(transform: Transform): void {
+    public applyAngularImpulse(transform: Transform, deltaTime: number): void {
 
-        transform.rotation += (pressedKeys[controlsConfig.rotateRight]) ? 1 : 0
-        transform.rotation -= (pressedKeys[controlsConfig.rotateLeft]) ? 1 : 0
+        // apply angular impulse
+        transform.velocity.rotation += (pressedKeys[controlsConfig.right] ? physicsConfig.speed.rotation * deltaTime : 0) - (pressedKeys[controlsConfig.left] ? physicsConfig.speed.rotation * deltaTime : 0)
+    
+        // apply angular deceleration
+        transform.velocity.rotation *= physicsConfig.speed.deceleration
+    
     }
 
 }

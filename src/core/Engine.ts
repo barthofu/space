@@ -1,5 +1,5 @@
 import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer, ControlPlayer, CollisionsManager, CenterCamera } from '@systems'
+import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities } from '@systems'
 
 import { Entity, System } from '@ecs'
 
@@ -13,6 +13,7 @@ export default class Engine extends Entity {
     ]
     public systems: System[] = [
         new ControlPlayer(this),
+        new MoveEntities(this),
         new CollisionsManager(this),
         new CenterCamera(this),
         new Renderer(this),
