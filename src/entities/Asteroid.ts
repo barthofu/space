@@ -1,4 +1,4 @@
-import { Transform, ShapeRender, Collider } from "@components"
+import { Transform, ShapeRender, Collider, PhysicalBody } from "@components"
 import { Entity } from "@ecs"
 
 export class Asteroid extends Entity {
@@ -6,10 +6,9 @@ export class Asteroid extends Entity {
     constructor(size: number, position: vector) {
         super()
 
-        this._components = [
-            new Transform(position),
-            new ShapeRender('circle', 'white', [size / 2]),
-            new Collider(size / 2)
-        ]
+        this.addComponent(new Transform(position))
+        this.addComponent(new Collider(size / 2))
+        this.addComponent(new PhysicalBody())
+        this.addComponent(new ShapeRender('circle', 'white', [size / 2]))
     }
 }

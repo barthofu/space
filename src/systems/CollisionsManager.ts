@@ -1,5 +1,5 @@
 import { System, Entity } from '@ecs'
-import { Transform, Collider } from '@components'
+import { Transform, Collider, PhysicalBody } from '@components'
 import { physicsConfig } from '@configs'
 import SAT from 'sat'
 
@@ -72,9 +72,8 @@ export class CollisionsManager extends System {
         const entity = this.engine.getEntityById(collision.a.entityId)!,
               otherEntity = this.engine.getEntityById(collision.b.entityId)!
 
-        if (entity.tag === 'player') {
-            // entity.getComponent(Transform)!.position.x -= collision.overlapV.x
-            // entity.getComponent(Transform)!.position.y -= collision.overlapV.y
+        if (entity.tag === 'player' && otherEntity.hasComponent(PhysicalBody)) {
+
             entity.getComponent(Transform)!.velocity.x = - entity.getComponent(Transform)!.velocity.x * physicsConfig.collisions.knockbackStrength
             entity.getComponent(Transform)!.velocity.y = - entity.getComponent(Transform)!.velocity.y * physicsConfig.collisions.knockbackStrength
         }

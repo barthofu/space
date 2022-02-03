@@ -5,8 +5,7 @@ export const controlsConfig = {
     left: 'ArrowLeft',  
     right: 'ArrowRight',
 
-    rotateRight: 'e',
-    rotateLeft: 'a',
+    shoot: ' ', // space
 
     debug: 'd'
 }

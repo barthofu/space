@@ -1,22 +1,29 @@
-import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities } from '@systems'
-
 import { Entity, System } from '@ecs'
+import { Spaceship, Camera, Asteroid } from '@entities'
+import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug } from '@systems'
+
+import { InputsHandler } from './InputsHandler'
 
 export default class Engine extends Entity {
 
     private _lastTimestamp = 0
+    private readonly _input = new InputsHandler()
+
     public entities: Entity[] = [
         new Spaceship(),
         new Camera(true),
         new Asteroid(100, { x: 5380, y: 4950 }),
     ]
+    
     public systems: System[] = [
         new ControlPlayer(this),
         new MoveEntities(this),
+        new ShootBullet(this),
+        new BulletManager(this),
         new CollisionsManager(this),
         new CenterCamera(this),
         new Renderer(this),
+        new Debug(this)
     ]
 
     public awake(): void {
@@ -86,6 +93,12 @@ export default class Engine extends Entity {
 
     public getEntities<C extends Entity>(constr: Class<C>): C[] {
         return this.entities.filter(entity => entity instanceof constr) as C[]
+    }
+
+    // InputsHandler
+
+    public get input(): InputsHandler {
+        return this._input
     }
     
 }

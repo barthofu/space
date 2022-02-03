@@ -1,6 +1,6 @@
 import { System } from "@ecs"
 import { Transform, Controllable } from "@components"
-import { controlsConfig, physicsConfig } from '@configs'
+import { physicsConfig } from '@configs'
 import { degreesToRadians } from "@utils/functions"
 
 export class ControlPlayer extends System {
@@ -13,35 +13,42 @@ export class ControlPlayer extends System {
 
                 const transform = entity.getComponent(Transform)!
 
-                this.applyForwardImpulse(transform, _deltaTime)
-                this.applyAngularImpulse(transform, _deltaTime)
+                if (this.engine.input.isKeyDown('up')) this.applyLinearImpulse(1, transform, _deltaTime)
+                if (this.engine.input.isKeyDown('down')) this.applyLinearImpulse(-0.25, transform, _deltaTime)
+                if (this.engine.input.isKeyDown('right')) this.applyAngularImpulse(1, transform, _deltaTime)
+                if (this.engine.input.isKeyDown('left')) this.applyAngularImpulse(-1, transform, _deltaTime)
+
+                this.applyLinearDeceleration(transform)
+                this.applyAngularDeceleration(transform)
+
             }
         }
     }
+    
 
-    public applyForwardImpulse(transform: Transform, deltaTime: number): void {
+    private applyLinearImpulse(thrust: number, transform: Transform, deltaTime: number): void {
 
-        const thrust = (pressedKeys[controlsConfig.up]) ? 1 : (pressedKeys[controlsConfig.down] ? -0.25 : 0),
-              angle = -degreesToRadians(transform.rotation)
+        const angle = -degreesToRadians(transform.rotation)
 
         // apply thrust
         transform.velocity.x -= thrust * Math.sin(angle) * physicsConfig.speed.acceleration * deltaTime
         transform.velocity.y -= thrust * Math.cos(angle) * physicsConfig.speed.acceleration * deltaTime 
+    }
 
-        // apply natural deceleration
+    private applyAngularImpulse(coeff: number, transform: Transform, deltaTime: number): void {
+
+        // apply angular impulse
+        transform.velocity.rotation += coeff * physicsConfig.rotation.acceleration * deltaTime
+    }
+
+    private applyLinearDeceleration(transform: Transform): void {
+            
         transform.velocity.x *= physicsConfig.speed.deceleration
         transform.velocity.y *= physicsConfig.speed.deceleration
     }
 
-    public applyAngularImpulse(transform: Transform, deltaTime: number): void {
+    private applyAngularDeceleration(transform: Transform): void {
 
-        // apply angular impulse
-        transform.velocity.rotation += 
-            (pressedKeys[controlsConfig.right] ? physicsConfig.rotation.acceleration * deltaTime : 0) 
-            - 
-            (pressedKeys[controlsConfig.left] ? physicsConfig.rotation.acceleration * deltaTime : 0)
-    
-        // apply angular natural deceleration
         transform.velocity.rotation *= physicsConfig.rotation.deceleration
     }
 
