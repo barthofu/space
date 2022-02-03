@@ -1,5 +1,5 @@
 import { System } from "@ecs"
-import { ShapeRender, Position, Hidden } from "@components"
+import { ShapeRender, Transform, Hidden } from "@components"
 import { convertCoordinates } from '@utils'
 import { gameConfig } from '@configs'
 
@@ -9,7 +9,7 @@ export class Renderer extends System {
     public update(_deltaTime: number): void {
         
         const camera = this.engine.getEntitiesByTag('mainCamera')[0],
-              cameraPosition = camera.getComponent(Position)!
+              cameraTransform = camera.getComponent(Transform)!
 
         // we first clear the canvas for redrawing
         ctx.clearRect(0, 0, gameConfig.window.width, gameConfig.window.height)
@@ -17,13 +17,17 @@ export class Renderer extends System {
         for (const entity of this.engine.entities) {
 
              // looking if they have the components to render them
-            if (entity.matchComponents([ShapeRender, Position], [Hidden])) {
+            if (entity.matchComponents([ShapeRender, Transform], [Hidden])) {
 
-                const entityPosition = entity.getComponent(Position)!,
+                const transform = entity.getComponent(Transform)!,
                       shapeRender = entity.getComponent(ShapeRender)
 
                 // convertion from world positions to canvas position
-                const position: coordinates = convertCoordinates(entityPosition, cameraPosition, gameConfig.window)
+                const position: vector = convertCoordinates(
+                    transform.position,
+                    cameraTransform.position, 
+                    gameConfig.window
+                )
 
                 if (shapeRender) {
                     if (shapeRender.shape === 'triangle') 
@@ -48,7 +52,7 @@ export class Renderer extends System {
     }
 
 
-    private drawTriangle({ position, color, size }: { position: coordinates, color: string, size: size }) {
+    private drawTriangle({ position, color, size }: { position: vector, color: string, size: size }) {
 
         ctx.beginPath()
 
@@ -71,7 +75,7 @@ export class Renderer extends System {
 
 
 
-    private drawCircle({ position, color, radius }: { position: coordinates, color: string, radius: number }) {
+    private drawCircle({ position, color, radius }: { position: vector, color: string, radius: number }) {
 
         ctx.beginPath()
 

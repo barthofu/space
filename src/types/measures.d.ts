@@ -1,4 +1,4 @@
-type coordinates = {
+type vector = {
     x: number,
     y: number
 }

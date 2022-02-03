@@ -1,5 +1,5 @@
 import { System, Entity } from '@ecs'
-import { Position, Collider } from '@components'
+import { Transform, Collider } from '@components'
 import SAT from 'sat'
 
 export class CollisionsManager extends System {
@@ -34,7 +34,7 @@ export class CollisionsManager extends System {
         const collidableEntities: Entity[] = []
 
         for (const entity of this.engine.entities) {
-            if (entity.matchComponents([Position, Collider], [])) collidableEntities.push(entity)
+            if (entity.matchComponents([Transform, Collider], [])) collidableEntities.push(entity)
         }
 
         return collidableEntities
@@ -42,19 +42,19 @@ export class CollisionsManager extends System {
 
     public testCollision(entity: Entity, otherEntity: Entity): SAT.Response | null {
 
-        const entityPosition = entity.getComponent(Position)!,
+        const entityTransform = entity.getComponent(Transform)!,
               entityCollider = entity.getComponent(Collider)!,
 
-              otherEntityPosition = otherEntity.getComponent(Position)!,
+              otherEntityTransform = otherEntity.getComponent(Transform)!,
               otherEntityCollider = otherEntity.getComponent(Collider)!,
 
               entityShape = new SAT.Circle(
-                    new SAT.Vector(entityPosition.x, entityPosition.y), 
+                    new SAT.Vector(entityTransform.position.x, entityTransform.position.y), 
                     entityCollider.radius, 
                     entity.id
                 ),
               otherEntityShape = new SAT.Circle(
-                    new SAT.Vector(otherEntityPosition.x, otherEntityPosition.y), 
+                    new SAT.Vector(otherEntityTransform.position.x, otherEntityTransform.position.y), 
                     otherEntityCollider.radius, 
                     otherEntity.id
                 )
@@ -72,59 +72,10 @@ export class CollisionsManager extends System {
               otherEntity = this.engine.getEntityById(collision.b.entityId)!
 
         if (entity.tag === 'player') {
-            entity.getComponent(Position)!.x -= collision.overlapV.x
-            entity.getComponent(Position)!.y -= collision.overlapV.y
+            entity.getComponent(Transform)!.position.x -= collision.overlapV.x
+            entity.getComponent(Transform)!.position.y -= collision.overlapV.y
         }
 
     }
-
-
-
-    // public update(deltaTime: number): void {
-        
-    //     const collisionsToTest = {
-    //         player: null
-    //     }
-
-    //     // setup the collision system by adding all the collidable entities to it
-    //     for (const entity of this.engine.entities) {
-            
-    //         if (entity.matchComponents([Position, Collider], [])) {
-                
-    //             const position = entity.getComponent(Position)!,
-    //                   collider = entity.getComponent(Collider)!
-
-    //             const circleCollider = new Circle(position.x, position.y, collider.radius)
-
-    //             if (collisionsToTest[entity.getTag() as keyof typeof collisionsToTest]) {
-    //                 collisionsToTest[entity.getTag() as keyof typeof collisionsToTest] = circleCollider
-    //             }
-            
-    //             collisionSystem.insert(circleCollider)
-    //         }
-        
-    //     }
-
-    //     collisionSystem.update()
-
-    //     // test for collisions
-    //     for (const collisionToTest of Object.entries(collisionsToTest)) {
-
-    //         const tag = collisionToTest[0]
-    //         const collision = collisionToTest[1]
-
-    //         if (collision) {
-                
-    //             const potentials = collision.potentials()
-
-    //             for (const potential of potentials)
-    //         }
-
-
-    //     }
-
-    // }
-
-
 
 }

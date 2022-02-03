@@ -1,5 +1,5 @@
 import { System } from "@ecs"
-import { Position, Controllable } from "@components"
+import { Transform, Controllable } from "@components"
 import { controlsConfig } from '@configs'
 
 export class ControlPlayer extends System {
@@ -8,14 +8,14 @@ export class ControlPlayer extends System {
 
         for (const entity of this.engine.entities) {
 
-            if (entity.matchComponents([Position, Controllable], [])) {
+            if (entity.matchComponents([Transform, Controllable], [])) {
 
-                const position = entity.getComponent(Position)!
+                const transform = entity.getComponent(Transform)!
 
-                position.x += (pressedKeys[controlsConfig.right]) ? 1 : 0
-                position.x -= (pressedKeys[controlsConfig.left]) ? 1 : 0
-                position.y += (pressedKeys[controlsConfig.down]) ? 1 : 0
-                position.y -= (pressedKeys[controlsConfig.up]) ? 1 : 0
+                transform.position.x += (pressedKeys[controlsConfig.right]) ? 1 : 0
+                transform.position.x -= (pressedKeys[controlsConfig.left]) ? 1 : 0
+                transform.position.y += (pressedKeys[controlsConfig.down]) ? 1 : 0
+                transform.position.y -= (pressedKeys[controlsConfig.up]) ? 1 : 0
 
                 if (pressedKeys[controlsConfig.debug]) {
                     console.log(this.engine)
