@@ -28,7 +28,7 @@ export class ControlPlayer extends System {
         transform.velocity.x -= thrust * Math.sin(angle) * physicsConfig.speed.acceleration * deltaTime
         transform.velocity.y -= thrust * Math.cos(angle) * physicsConfig.speed.acceleration * deltaTime 
 
-        // apply deceleration
+        // apply natural deceleration
         transform.velocity.x *= physicsConfig.speed.deceleration
         transform.velocity.y *= physicsConfig.speed.deceleration
     }
@@ -36,11 +36,13 @@ export class ControlPlayer extends System {
     public applyAngularImpulse(transform: Transform, deltaTime: number): void {
 
         // apply angular impulse
-        transform.velocity.rotation += (pressedKeys[controlsConfig.right] ? physicsConfig.speed.rotation * deltaTime : 0) - (pressedKeys[controlsConfig.left] ? physicsConfig.speed.rotation * deltaTime : 0)
+        transform.velocity.rotation += 
+            (pressedKeys[controlsConfig.right] ? physicsConfig.rotation.acceleration * deltaTime : 0) 
+            - 
+            (pressedKeys[controlsConfig.left] ? physicsConfig.rotation.acceleration * deltaTime : 0)
     
-        // apply angular deceleration
-        transform.velocity.rotation *= physicsConfig.speed.deceleration
-    
+        // apply angular natural deceleration
+        transform.velocity.rotation *= physicsConfig.rotation.deceleration
     }
 
 }
