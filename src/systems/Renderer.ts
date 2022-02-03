@@ -1,6 +1,6 @@
 import { System } from "@ecs"
 import { ShapeRender, Transform, Hidden } from "@components"
-import { worldToCanvasCoordinates, degreesToRadians } from '@utils'
+import { worldToCanvasCoordinates, degreesToRadians } from '@utils/functions'
 import { gameConfig } from '@configs'
 
 export class Renderer extends System {

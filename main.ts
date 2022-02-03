@@ -1,5 +1,5 @@
 import { gameConfig } from '@configs'
-import '@styles/main.scss'
+import './styles.scss'
 import Engine from '@core/Engine'
 //import { Map } from '@/core/Map'
 
