@@ -1,4 +1,4 @@
-export function convertCoordinates (entityPosition: vector, cameraPosition: vector, cameraSize: size): vector {
+export function worldToCanvasCoordinates (entityPosition: vector, cameraPosition: vector, cameraSize: size): vector {
 
     const newPosition = {
         x: entityPosition.x - (cameraPosition.x - cameraSize.width / 2),
@@ -6,4 +6,8 @@ export function convertCoordinates (entityPosition: vector, cameraPosition: vect
     }
 
     return newPosition
+}
+
+export function degreesToRadians (degrees: number): number {
+    return degrees * Math.PI / 180
 }

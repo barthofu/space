@@ -1,6 +1,6 @@
 import { System } from "@ecs"
 import { ShapeRender, Transform, Hidden } from "@components"
-import { convertCoordinates } from '@utils'
+import { worldToCanvasCoordinates, degreesToRadians } from '@utils'
 import { gameConfig } from '@configs'
 
 export class Renderer extends System {
@@ -23,11 +23,15 @@ export class Renderer extends System {
                       shapeRender = entity.getComponent(ShapeRender)
 
                 // convertion from world positions to canvas position
-                const position: vector = convertCoordinates(
-                    transform.position,
-                    cameraTransform.position, 
-                    gameConfig.window
-                )
+                let position: vector = worldToCanvasCoordinates(transform.position, cameraTransform.position, gameConfig.window)
+
+                // rotate the canvas according to the entity rotation
+                ctx.save()
+                ctx.translate(position.x, position.y)
+                ctx.rotate(degreesToRadians(transform.rotation))
+
+                // now that the canvas is translated to the entity position, we reset the position to 0,0 to match with the origin the canvas
+                position = { x: 0, y: 0 }
 
                 if (shapeRender) {
                     if (shapeRender.shape === 'triangle') 
@@ -46,6 +50,8 @@ export class Renderer extends System {
                             radius: shapeRender.options[0]
                         })
                 }
+
+                ctx.restore()
                     
             }
         }
