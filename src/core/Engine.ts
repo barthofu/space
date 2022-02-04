@@ -1,6 +1,6 @@
 import { Entity, System } from '@ecs'
 import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug } from '@systems'
+import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust } from '@systems'
 
 import { InputsHandler } from './InputsHandler'
 
@@ -20,6 +20,7 @@ export default class Engine extends Entity {
         new MoveEntities(this),
         new ShootBullet(this),
         new BulletManager(this),
+        new Thrust(this),
         new CollisionsManager(this),
         new CenterCamera(this),
         new Renderer(this),

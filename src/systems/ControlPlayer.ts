@@ -1,6 +1,6 @@
 import { System } from "@ecs"
 import { Transform, Controllable } from "@components"
-import { physicsConfig } from '@configs'
+import { gameConfig, physicsConfig } from '@configs'
 import { degreesToRadians } from "@utils/functions"
 
 export class ControlPlayer extends System {
@@ -13,8 +13,8 @@ export class ControlPlayer extends System {
 
                 const transform = entity.getComponent(Transform)!
 
-                if (this.engine.input.isKeyDown('up')) this.applyLinearImpulse(1, transform, _deltaTime)
-                if (this.engine.input.isKeyDown('down')) this.applyLinearImpulse(-0.25, transform, _deltaTime)
+                if (this.engine.input.isKeyDown('up')) this.applyLinearImpulse(gameConfig.thrust.speed.forward, transform, _deltaTime)
+                if (this.engine.input.isKeyDown('down')) this.applyLinearImpulse(gameConfig.thrust.speed.backward, transform, _deltaTime)
                 if (this.engine.input.isKeyDown('right')) this.applyAngularImpulse(1, transform, _deltaTime)
                 if (this.engine.input.isKeyDown('left')) this.applyAngularImpulse(-1, transform, _deltaTime)
 

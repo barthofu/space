@@ -1,6 +1,5 @@
 import { System } from '@ecs'
 import { Bullet } from '@entities'
-import { gameConfig } from '@configs'
 
 export class BulletManager extends System {
 
@@ -10,9 +9,12 @@ export class BulletManager extends System {
         
         for (const bullet of bullets) {
 
-            if (Date.now() - bullet.createdAt > gameConfig.bullet.lifetime) {
-                this.engine.removeEntity(bullet)
-            }
+            this.removeOutdatedBullet(bullet)
         }
+    }
+
+    public removeOutdatedBullet(bullet: Bullet): void {
+            
+        if (Date.now() - bullet.createdAt > bullet.lifetime) this.engine.removeEntity(bullet)
     }
 }

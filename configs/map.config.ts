@@ -5,6 +5,4 @@ export const mapConfig = {
         width: 10000,
         height: 10000
     }
-
-    // The number of elements to generate
 }

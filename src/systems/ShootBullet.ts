@@ -13,19 +13,20 @@ export class ShootBullet extends System {
             const spaceship = this.engine.getEntitiesByTag('player')[0]!,
                   transform = spaceship.getComponent(Transform)!
 
-            const bulletRotation = -degreesToRadians(transform.rotation),
+            const spaceshipRotation = -degreesToRadians(transform.rotation),
                   bulletVelocity: velocity = {
-                    x: gameConfig.bullet.speed * - Math.sin(bulletRotation),
-                    y: gameConfig.bullet.speed * - Math.cos(bulletRotation),
+                    x: gameConfig.bullet.speed * - Math.sin(spaceshipRotation),
+                    y: gameConfig.bullet.speed * - Math.cos(spaceshipRotation),
                     rotation: 0
-            }
+                }
 
-            const bullet = new Bullet(
-                gameConfig.bullet.size,
-                { ...transform.position },
-                bulletVelocity,
-                gameConfig.bullet.color
-            )
+            const bullet = new Bullet({
+                size: gameConfig.bullet.size,
+                position: { ...transform.position },
+                velocity: bulletVelocity,
+                color: gameConfig.bullet.color,
+                lifetime: gameConfig.bullet.lifetime
+            })
 
             this.engine.addEntity(bullet)
         }

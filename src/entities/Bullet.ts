@@ -1,24 +1,15 @@
-import { Entity } from '@ecs'
-import { Transform, ShapeRender, Collider } from '@components'
+import { Particle } from './Particle'
+import { Collider } from '@components'
 
-export class Bullet extends Entity {
+export class Bullet extends Particle {
 
     public static lastCreated: number = Date.now()
 
-    public createdAt: number = Date.now()
-
-    constructor(size: number, position: vector, velocity: velocity, color: string = 'red') {
-        super()
-
+    constructor(args: particleArgs) {
+        super(args)
+        
         Bullet.lastCreated = Date.now()
-
-        this.addComponent(new Transform(
-            position,
-            0,
-            velocity,
-        ))
-        this.addComponent(new Collider(size / 2))
-        this.addComponent(new ShapeRender('circle', color, [size / 2]))
+        this.addComponent(new Collider(args.size / 2))
     }
 
 }
