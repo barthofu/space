@@ -3,11 +3,13 @@ import { Spaceship, Camera, Asteroid } from '@entities'
 import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust } from '@systems'
 
 import { InputsHandler } from './InputsHandler'
+import { StateManager } from './StateManager'
 
 export default class Engine extends Entity {
 
     private _lastTimestamp = 0
     private readonly _input = new InputsHandler()
+    private readonly _state = new StateManager()
 
     public entities: Entity[] = [
         new Spaceship(),
@@ -26,6 +28,7 @@ export default class Engine extends Entity {
         new Renderer(this),
         new Debug(this)
     ]
+
 
     public awake(): void {
 
@@ -102,4 +105,9 @@ export default class Engine extends Entity {
         return this._input
     }
     
+    // StateManager
+
+    public get state(): StateManager {
+        return this._state
+    }
 }
