@@ -1,5 +1,5 @@
 import { System } from "@ecs"
-import { Transform, ShapeRender } from "@components"
+import { Transform, CircleRender } from "@components"
 import { Particle } from "@entities"
 
 import { gameConfig } from "@configs"
@@ -15,7 +15,6 @@ export class Thrust extends System {
 
             this.removeOutdatedParticles(particle)
             this.lightenParticle(particle)
-            
         }
 
         if (this.engine.input.isKeyDown('up')) this.createThrustParticle(1)
@@ -29,8 +28,8 @@ export class Thrust extends System {
 
     private lightenParticle(particle: Particle): void {
     
-        const shapeRender = particle.getComponent(ShapeRender)!
-        shapeRender.color = adjustAlpha(shapeRender.color, -0.01)
+        const circleRender = particle.getComponent(CircleRender)!
+        circleRender.fill = adjustAlpha(circleRender.fill!, -0.01)
     }
 
     private createThrustParticle(coeff: number): void {

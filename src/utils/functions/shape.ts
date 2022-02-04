@@ -2,8 +2,6 @@ import { randomizeWithinRange } from "@utils/functions"
 
 /**
  * Generate an asteroid irregular polygon shape
-//  * @param x The center X of the asteroid
-//  * @param y The center Y of the asteroid
  * @param numberOfNodes How many dents the asteroid has
  * @param minRadius Radius of the deepest valley
  * @param maxRadius Radius of the highest montain
