@@ -1,6 +1,6 @@
 import { Entity, System } from '@ecs'
 import { Spaceship, Camera, Asteroid } from '@entities'
-import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust } from '@systems'
+import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust, RenderCollisions, ClearCanvas } from '@systems'
 
 import { InputsHandler } from './InputsHandler'
 import { StateManager } from './StateManager'
@@ -18,6 +18,7 @@ export default class Engine extends Entity {
     ]
     
     public systems: System[] = [
+        new ClearCanvas(this),
         new ControlPlayer(this),
         new MoveEntities(this),
         new ShootBullet(this),
@@ -25,6 +26,7 @@ export default class Engine extends Entity {
         new Thrust(this),
         new CollisionsManager(this),
         new CenterCamera(this),
+        //new RenderCollisions(this),
         new Renderer(this),
         new Debug(this)
     ]

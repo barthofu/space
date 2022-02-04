@@ -19,7 +19,7 @@ export class Thrust extends System {
         }
 
         if (this.engine.input.isKeyDown('up')) this.createThrustParticle(1)
-        if (this.engine.input.isKeyDown('down')) this.createThrustParticle(-1)
+        else if (this.engine.input.isKeyDown('down')) this.createThrustParticle(-1)
     }
 
     private removeOutdatedParticles(particle: Particle): void {

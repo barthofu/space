@@ -6,5 +6,7 @@ export * from './MoveEntities'
 export * from './ShootBullet'
 export * from './BulletManager'
 export * from './Thrust'
+export * from './RenderCollisions'
+export * from './ClearCanvas'
 
 export * from './Debug'

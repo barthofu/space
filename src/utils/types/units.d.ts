@@ -11,3 +11,8 @@ type size = {
     width: number,
     height: number
 }
+
+type color = { 
+    fill?: string, 
+    outline?: string 
+}

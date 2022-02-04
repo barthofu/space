@@ -24,7 +24,7 @@ export class CollisionsManager extends System {
         }
 
         for (const collision of collisions) {
-            this.handleCollision(collision)
+            this.handleCollision(collision, _deltaTime)
         }
 
     }
@@ -40,6 +40,7 @@ export class CollisionsManager extends System {
 
         return collidableEntities
     }
+
 
     public testCollision(entity: Entity, otherEntity: Entity): SAT.Response | null {
 
@@ -67,15 +68,15 @@ export class CollisionsManager extends System {
     }
 
 
-    public handleCollision(collision: SAT.Response) {
+    public handleCollision(collision: SAT.Response, deltaTime: number): void {
 
         const entity = this.engine.getEntityById(collision.a.entityId)!,
               otherEntity = this.engine.getEntityById(collision.b.entityId)!
 
         if (entity.tag === 'player' && otherEntity.hasComponent(PhysicalBody)) {
 
-            entity.getComponent(Transform)!.velocity.x = - entity.getComponent(Transform)!.velocity.x * physicsConfig.collisions.knockbackStrength
-            entity.getComponent(Transform)!.velocity.y = - entity.getComponent(Transform)!.velocity.y * physicsConfig.collisions.knockbackStrength
+            entity.getComponent(Transform)!.velocity.x = - entity.getComponent(Transform)!.velocity.x + physicsConfig.collisions.knockbackStrength * deltaTime
+            entity.getComponent(Transform)!.velocity.y = - entity.getComponent(Transform)!.velocity.y + physicsConfig.collisions.knockbackStrength * deltaTime
         }
 
     }
