@@ -1,6 +1,6 @@
 import { System } from "@ecs"
-import { PolygonRender, CircleRender, ShapeRender, Transform, Hidden } from "@components"
-import { drawPolygon, drawCircle, worldToCanvasCoordinates, degreesToRadians } from '@utils/functions'
+import { PolygonRender, CircleRender, Render, Transform, Hidden, SpriteRender } from "@components"
+import { drawPolygon, drawCircle, drawImage, worldToCanvasCoordinates, degreesToRadians } from '@utils/functions'
 import { gameConfig } from '@configs'
 
 export class Renderer extends System {
@@ -14,7 +14,7 @@ export class Renderer extends System {
         for (const entity of this.engine.entities) {
 
              // looking if they have the components to render them
-            if (entity.matchComponents([ShapeRender, Transform], [Hidden])) {
+            if (entity.matchComponents([Render, Transform], [Hidden])) {
 
                 const transform = entity.getComponent(Transform)!
 
@@ -30,8 +30,8 @@ export class Renderer extends System {
                 position = { x: 0, y: 0 }
 
                 const circleRender = entity.getComponent(CircleRender),
-                      polygonRender = entity.getComponent(PolygonRender)
-
+                      polygonRender = entity.getComponent(PolygonRender),
+                      spriteRender = entity.getComponent(SpriteRender)
                 
                 if (circleRender) {
                     drawCircle({ 
@@ -52,7 +52,19 @@ export class Renderer extends System {
                             outline: polygonRender.outline
                         }
                     })
-                }                
+                }   
+                else if (spriteRender) {
+
+                    const image = new Image()
+                    image.src = spriteRender.asset
+                    
+                    drawImage({
+                        image: image,
+                        position,
+                        size: spriteRender.size,
+                        sizeOffset: spriteRender.sizeOffset
+                    })
+                }             
 
                 ctx.restore()
             }

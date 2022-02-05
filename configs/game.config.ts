@@ -41,8 +41,8 @@ export const gameConfig = {
     asteroid: {
 
         size: {
-            min: 10,
-            max: 30
+            min: 30,
+            max: 300
         },
 
         radius: { // multiply by size to get radius

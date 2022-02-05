@@ -1,5 +1,5 @@
 import { Entity, System } from '@ecs'
-import { Spaceship, Camera, Asteroid } from '@entities'
+import { Spaceship, Camera, Asteroid, Planet } from '@entities'
 import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust, RenderCollisions, ClearCanvas } from '@systems'
 
 import { InputsHandler } from './InputsHandler'
@@ -15,6 +15,7 @@ export default class Engine extends Entity {
         new Spaceship(),
         new Camera(true),
         new Asteroid(100, { x: 5380, y: 4950 }),
+        new Planet('assets/planets/planet_pink.png', { x: 4500, y: 5300 }, 500, 1.45)
     ]
     
     public systems: System[] = [

@@ -1,8 +1,10 @@
 export * from './Render/CircleRender'
 export * from './Render/PolygonRender'
 export * from './Render/ShapeRender'
-// export * from './Render/SpriteRender'
+export * from './Render/SpriteRender'
 export * from './Render/PolygonRender'
+export * from './Render/Render'
+
 export * from './Controllable'
 export * from './Collider'
 export * from './Transform'

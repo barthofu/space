@@ -1,6 +1,6 @@
-import { Component } from '@ecs'
+import { Render } from './Render'
 
-export class ShapeRender extends Component {
+export class ShapeRender extends Render {
 
     public fill?: string
     public outline?: string

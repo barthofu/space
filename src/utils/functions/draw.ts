@@ -44,6 +44,20 @@ export function drawPolygon({ position, points, color }: drawArgs & { points: nu
     finishDraw(color)
 }
 
+export function drawImage({ image, position, size, sizeOffset  }: { image: HTMLImageElement, position: vector, size: size, sizeOffset: size }): void {
+
+    const width = size.width * sizeOffset.width,
+          height = size.height * sizeOffset.height
+    
+    ctx.drawImage(
+        image,
+        position.x - width / 2,
+        position.y - height / 2,
+        width,
+        height
+    )
+}
+
 function finishDraw({fill, outline}: color): void {
 
     if (fill) {
