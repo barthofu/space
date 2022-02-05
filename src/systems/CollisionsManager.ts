@@ -52,14 +52,15 @@ export class CollisionsManager extends System {
 
               entityShape = new SAT.Circle(
                     new SAT.Vector(entityTransform.position.x, entityTransform.position.y), 
-                    entityCollider.radius, 
-                    entity.id
+                    entityCollider.radius
                 ),
               otherEntityShape = new SAT.Circle(
                     new SAT.Vector(otherEntityTransform.position.x, otherEntityTransform.position.y), 
-                    otherEntityCollider.radius, 
-                    otherEntity.id
+                    otherEntityCollider.radius
                 )
+
+        entityShape.entityId = entity.id
+        otherEntityShape.entityId = otherEntity.id
 
         const response = new SAT.Response()
         
