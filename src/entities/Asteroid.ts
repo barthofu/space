@@ -1,6 +1,7 @@
 import { Entity } from "@ecs"
 import { Transform, PolygonRender, Collider, PhysicalBody } from "@components"
 import { generateAsteroidShape } from "@utils/functions"
+import { gameConfig } from "@configs"
 
 export class Asteroid extends Entity {
 
@@ -15,7 +16,7 @@ export class Asteroid extends Entity {
         this.addComponent(new PhysicalBody())
         this.addComponent(
             new PolygonRender(
-                generateAsteroidShape(30, radius * 0.75, radius),
+                generateAsteroidShape(30, radius * gameConfig.asteroid.radius.min, radius * gameConfig.asteroid.radius.max),
                 { outline: 'white' },
             )
         )

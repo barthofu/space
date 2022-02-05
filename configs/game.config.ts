@@ -18,7 +18,7 @@ export const gameConfig = {
         damages: 3,
         color: 'blue',
         speed: 4,
-        delay: 1,
+        delay: 50,
         lifetime: 1000 // in ms
     },
 
@@ -36,5 +36,26 @@ export const gameConfig = {
             size: 10,
             lifetime: 500 // in ms
         }
+    },
+
+    asteroid: {
+
+        size: {
+            min: 10,
+            max: 30
+        },
+
+        radius: { // multiply by size to get radius
+            min: 0.9, 
+            max: 1 // don't touch this
+        },
+        
+        speed: {
+            min: 1,
+            max: 3,
+            rotation: 0.1
+        }
+
     }
+
 }

@@ -8,9 +8,9 @@ import { randomizeWithinRange } from "@utils/functions"
  */
 export function generateAsteroidShape(numberOfNodes: number, minRadius: number, maxRadius: number) {
 
-    const angleStep = Math.PI * 2 / numberOfNodes
-    const shape = []
     numberOfNodes = randomizeWithinRange(numberOfNodes, 5)
+    const shape = []
+    const angleStep = Math.PI * 2 / numberOfNodes
 
     for (let i = 0; i < numberOfNodes; i++) {
         const angle = angleStep * i
@@ -18,7 +18,6 @@ export function generateAsteroidShape(numberOfNodes: number, minRadius: number, 
         shape.push([Math.cos(angle) * radius, Math.sin(angle) * radius])
     }
     
-    console.log(shape)
     return shape
 }
 
