@@ -44,8 +44,8 @@ export class Thrust extends System {
                     rotation: 0
                 },
               particlePosition: vector = {
-                    x: transform.position.x + gameConfig.spaceship.size / 2 * Math.sin(spaceshipRotation),
-                    y: transform.position.y + gameConfig.spaceship.size / 2 * Math.cos(spaceshipRotation)
+                    x: transform.position.x + gameConfig.spaceship.size / 2 * Math.sin(spaceshipRotation) * gameConfig.thrust.particles.offset,
+                    y: transform.position.y + gameConfig.spaceship.size / 2 * Math.cos(spaceshipRotation)  * gameConfig.thrust.particles.offset
                 }
 
         const particle = new Particle({

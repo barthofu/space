@@ -18,7 +18,7 @@ export const gameConfig = {
         damages: 3,
         color: 'blue',
         speed: 4,
-        delay: 100,
+        delay: 1,
         lifetime: 1000 // in ms
     },
 
@@ -31,6 +31,7 @@ export const gameConfig = {
 
         particles: {
 
+            offset: 1.5,
             speed: 4,
             size: 10,
             lifetime: 500 // in ms
