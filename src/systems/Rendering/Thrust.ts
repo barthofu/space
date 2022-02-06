@@ -9,7 +9,7 @@ export class Thrust extends System {
 
     public update(_deltaTime: number): void {
 
-        const particles = this.engine.getEntitiesByTag('thrust') as Particle[]
+        const particles = engine.scene.getEntitiesByTag('thrust') as Particle[]
 
         for (const particle of particles) {
 
@@ -17,13 +17,13 @@ export class Thrust extends System {
             this.lightenParticle(particle)
         }
 
-        if (this.engine.input.isKeyDown('up')) this.createThrustParticle(1)
-        else if (this.engine.input.isKeyDown('down')) this.createThrustParticle(-1)
+        if (engine.input.isKeyDown('up')) this.createThrustParticle(1)
+        else if (engine.input.isKeyDown('down')) this.createThrustParticle(-1)
     }
 
     private removeOutdatedParticles(particle: Particle): void {
             
-        if (Date.now() - particle.createdAt > particle.lifetime) this.engine.removeEntity(particle)
+        if (Date.now() - particle.createdAt > particle.lifetime) engine.scene.removeEntity(particle)
     }
 
     private lightenParticle(particle: Particle): void {
@@ -34,7 +34,7 @@ export class Thrust extends System {
 
     private createThrustParticle(coeff: number): void {
 
-        const spaceship = this.engine.getEntitiesByTag('player')[0]!,
+        const spaceship = engine.scene.getEntitiesByTag('player')[0]!,
               transform = spaceship.getComponent(Transform)!
 
         const spaceshipRotation = -degreesToRadians(transform.rotation),
@@ -58,6 +58,6 @@ export class Thrust extends System {
 
         particle.tag = 'thrust'
 
-        this.engine.addEntity(particle)
+        engine.scene.addEntity(particle)
     }
 }

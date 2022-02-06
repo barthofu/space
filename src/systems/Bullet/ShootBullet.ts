@@ -8,9 +8,9 @@ export class ShootBullet extends System {
 
     public update(_deltaTime: number): void {
         
-        if (this.engine.input.isKeyDown('shoot') && Date.now() - Bullet.lastCreated > gameConfig.bullet.delay) {
+        if (engine.input.isKeyDown('shoot') && Date.now() - Bullet.lastCreated > gameConfig.bullet.delay) {
 
-            const spaceship = this.engine.getEntitiesByTag('player')[0]!,
+            const spaceship = engine.scene.getEntitiesByTag('player')[0]!,
                   transform = spaceship.getComponent(Transform)!
 
             const spaceshipRotation = -degreesToRadians(transform.rotation),
@@ -28,7 +28,7 @@ export class ShootBullet extends System {
                 lifetime: gameConfig.bullet.lifetime
             })
 
-            this.engine.addEntity(bullet)
+            engine.scene.addEntity(bullet)
         }
     }
 }

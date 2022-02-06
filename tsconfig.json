@@ -24,6 +24,7 @@
 			"@entities": ["./src/entities/"],
 			"@components": ["./src/components/"],
 			"@systems": ["./src/systems/"],
+			"@scenes": ["./src/scenes/"],
 			
 			"@utils/*": ["./src/utils/*"],
 			"@core/*": ["./src/core/*"],

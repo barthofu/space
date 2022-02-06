@@ -5,7 +5,7 @@ export class MoveEntities extends System {
 
     public update(_deltaTime: number): void {
 
-        for (const entity of this.engine.entities) {
+        for (const entity of engine.entities) {
 
             if (entity.matchComponents([Transform], [])) {
 

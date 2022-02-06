@@ -1,37 +1,18 @@
 import { Entity, System } from '@ecs'
-import { Spaceship, Camera, Asteroid, Planet } from '@entities'
-import { Renderer, ControlPlayer, CollisionsManager, CenterCamera, MoveEntities, ShootBullet, BulletManager, Debug, Thrust, RenderCollisions, ClearCanvas } from '@systems'
+import { IAwake, IUpdate } from '@utils/interfaces'
 
 import { InputsHandler } from './InputsHandler'
 import { StateManager } from './StateManager'
+import { SceneManager } from './SceneManager'
+import { Scene } from './Scene'
 
-export default class Engine extends Entity {
+export class Engine implements IAwake, IUpdate {
 
     private _lastTimestamp = 0
     private readonly _input = new InputsHandler()
     private readonly _state = new StateManager()
-
-    public entities: Entity[] = [
-        new Spaceship(),
-        new Camera(true),
-        new Asteroid(100, { x: 5380, y: 4950 }),
-        new Planet('assets/planets/planet_pink.png', { x: 4500, y: 5300 }, 500, 1.45)
-    ]
-    
-    public systems: System[] = [
-        new ClearCanvas(this),
-        new ControlPlayer(this),
-        new MoveEntities(this),
-        new ShootBullet(this),
-        new BulletManager(this),
-        new Thrust(this),
-        new CollisionsManager(this),
-        new CenterCamera(this),
-        //new RenderCollisions(this),
-        new Renderer(this),
-        new Debug(this)
-    ]
-
+    private readonly _sceneManager = new SceneManager()
+    private _systems: System[] = []
 
     public awake(): void {
 
@@ -49,7 +30,6 @@ export default class Engine extends Entity {
             this.update()
         })
 
-        console.log(this)
     }
 
     public update(): void {
@@ -69,48 +49,33 @@ export default class Engine extends Entity {
         window.requestAnimationFrame(() => this.update())
     }
 
+    // Entities 
 
-
-
-
-
-
-
-
-    // Entities
-
-    public addEntity(entity: Entity): void {
-        this.entities.push(entity)
-    }
-
-    public removeEntity(entity: Entity): void {
-        const index = this.entities.indexOf(entity)
-        if (index !== -1) {
-            this.entities.splice(index, 1)
-        }
-    }
-
-    public getEntitiesByTag(tag: string): Entity[] {
-        return this.entities.filter(entity => entity.tag === tag)
-    }
-
-    public getEntityById(id: string): Entity | undefined {
-        return this.entities.find(entity => entity.id === id)
-    }
-
-    public getEntities<C extends Entity>(constr: Class<C>): C[] {
-        return this.entities.filter(entity => entity instanceof constr) as C[]
-    }
+    public get entities(): Entity[] { return this.scene.entities }
 
     // InputsHandler
 
-    public get input(): InputsHandler {
-        return this._input
-    }
+    public get input(): InputsHandler { return this._input }
     
     // StateManager
 
-    public get state(): StateManager {
-        return this._state
-    }
+    public get state(): StateManager { return this._state }
+
+    // SceneManager
+
+    public get sceneManager(): SceneManager { return this._sceneManager }
+
+    // Scene
+
+    public get scene(): Scene { return this._sceneManager.currentScene }
+
+    // Systems
+
+    public get systems(): System[] { return this._systems }
+    public set systems(systems: System[]) { this._systems = systems }
+
+    public getSystem<C extends System>(constr: Class<C>): C { return this.systems.find(system => system instanceof constr) as C }
+
+    public addSystem(system: System): void { this.systems.push(system) }
+
 }

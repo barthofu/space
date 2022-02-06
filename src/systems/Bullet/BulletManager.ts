@@ -5,7 +5,7 @@ export class BulletManager extends System {
 
     public update(_deltaTime: number): void {
         
-        const bullets = this.engine.getEntities(Bullet)
+        const bullets = engine.scene.getEntities(Bullet)
         
         for (const bullet of bullets) {
 
@@ -15,6 +15,6 @@ export class BulletManager extends System {
 
     public removeOutdatedBullet(bullet: Bullet): void {
             
-        if (Date.now() - bullet.createdAt > bullet.lifetime) this.engine.removeEntity(bullet)
+        if (Date.now() - bullet.createdAt > bullet.lifetime) engine.scene.removeEntity(bullet)
     }
 }

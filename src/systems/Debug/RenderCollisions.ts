@@ -8,10 +8,10 @@ export class RenderCollisions extends System {
 
     public update(_deltaTime: number): void {
 
-        const camera = this.engine.getEntitiesByTag('mainCamera')[0],
+        const camera = engine.scene.getEntitiesByTag('mainCamera')[0],
               cameraTransform = camera.getComponent(Transform)!
 
-        for (const entity of this.engine.entities) {
+        for (const entity of engine.entities) {
 
             if (entity.matchComponents([Transform, Collider], [])) {
                 

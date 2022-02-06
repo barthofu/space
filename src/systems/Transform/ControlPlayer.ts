@@ -7,16 +7,16 @@ export class ControlPlayer extends System {
 
     public update(_deltaTime: number): void {
 
-        for (const entity of this.engine.entities) {
+        for (const entity of engine.entities) {
 
             if (entity.matchComponents([Transform, Controllable], [])) {
 
                 const transform = entity.getComponent(Transform)!
 
-                if (this.engine.input.isKeyDown('up')) this.applyLinearImpulse(gameConfig.thrust.speed.forward, transform, _deltaTime)
-                if (this.engine.input.isKeyDown('down')) this.applyLinearImpulse(gameConfig.thrust.speed.backward, transform, _deltaTime)
-                if (this.engine.input.isKeyDown('right')) this.applyAngularImpulse(1, transform, _deltaTime)
-                if (this.engine.input.isKeyDown('left')) this.applyAngularImpulse(-1, transform, _deltaTime)
+                if (engine.input.isKeyDown('up')) this.applyLinearImpulse(gameConfig.thrust.speed.forward, transform, _deltaTime)
+                if (engine.input.isKeyDown('down')) this.applyLinearImpulse(gameConfig.thrust.speed.backward, transform, _deltaTime)
+                if (engine.input.isKeyDown('right')) this.applyAngularImpulse(1, transform, _deltaTime)
+                if (engine.input.isKeyDown('left')) this.applyAngularImpulse(-1, transform, _deltaTime)
 
                 this.applyLinearDeceleration(transform)
                 this.applyAngularDeceleration(transform)

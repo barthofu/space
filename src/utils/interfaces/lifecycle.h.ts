@@ -3,5 +3,5 @@ export interface IAwake {
 }
 
 export interface IUpdate {
-    update(deltaTime: number): void
+    update(_deltaTime: number): void
 }
