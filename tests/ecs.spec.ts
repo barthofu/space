@@ -3,19 +3,16 @@ import { Entity, Component } from '../src/core/ecs/index'
 class E extends Entity {}
 
 class C1 extends Component { 
-    entity: E
     name: string = 'C1' 
     update = (_deltaTime: number) => {}
     awake = () => {}
 }
 class C2 extends Component { 
-    entity: E
     name: string = 'C2' 
     update = (_deltaTime: number) => {}
     awake = () => {}
 }
 class C3 extends Component { 
-    entity: E 
     name: string = 'C3' 
     update = (_deltaTime: number) => {}
     awake = () => {}

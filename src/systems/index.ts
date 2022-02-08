@@ -3,6 +3,7 @@ export * from './CollisionsManager'
 export * from './Transform/ControlPlayer'
 export * from './Transform/CenterCamera'
 export * from './Transform/MoveEntities'
+export * from './Transform/MovePlanets'
 
 export * from './Bullet/ShootBullet'
 export * from './Bullet/BulletManager'

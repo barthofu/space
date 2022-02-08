@@ -8,13 +8,13 @@ export const gameConfig = {
 
     spaceship: {
 
-        size: 30,
+        size: 3,
         health: 100
     },
 
     bullet: {
 
-        size: 5,
+        size: 0.5,
         damages: 3,
         color: 'blue',
         speed: 4,
@@ -33,7 +33,7 @@ export const gameConfig = {
 
             offset: 1.5,
             speed: 4,
-            size: 10,
+            size: 1,
             lifetime: 500 // in ms
         }
     },
@@ -41,8 +41,8 @@ export const gameConfig = {
     asteroid: {
 
         size: {
-            min: 30,
-            max: 300
+            min: 3,
+            max: 30
         },
 
         radius: { // multiply by size to get radius
@@ -56,6 +56,32 @@ export const gameConfig = {
             rotation: 0.1
         }
 
+    },
+
+    planet: {
+
+        size: {
+            min: 20,
+            max: 50
+        },
+
+        speed: {
+            coeff: 1,
+        },
+
+        colors: [
+            'blue',
+            'green',
+            'pink',
+            'purple',
+            'red',
+            'yellow'
+        ]
+    },
+
+    sun: {
+
+        sizeOffset: 1.6,
     }
 
 }

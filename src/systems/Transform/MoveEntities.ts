@@ -1,5 +1,6 @@
 import { System } from '@ecs'
 import { Transform } from '@components'
+import { mapConfig } from '@configs'
 
 export class MoveEntities extends System {
 
@@ -19,8 +20,8 @@ export class MoveEntities extends System {
 
     private moveEntityWithVelocity(transform: Transform): void {
 
-        transform.position.x += transform.velocity.x
-        transform.position.y += transform.velocity.y
+        transform.position.x += transform.velocity.x / engine.config.scale
+        transform.position.y += transform.velocity.y / engine.config.scale
     }
 
     private rotateEntityWithVelocity(transform: Transform): void {

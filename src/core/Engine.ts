@@ -5,6 +5,7 @@ import { InputsHandler } from './InputsHandler'
 import { StateManager } from './StateManager'
 import { SceneManager } from './SceneManager'
 import { Scene } from './Scene'
+import { mapConfig } from '@configs'
 
 export class Engine implements IAwake, IUpdate {
 
@@ -12,6 +13,9 @@ export class Engine implements IAwake, IUpdate {
     private readonly _input = new InputsHandler()
     private readonly _state = new StateManager()
     private readonly _sceneManager = new SceneManager()
+    private readonly _config = {
+        scale: mapConfig.scale
+    }
     private _systems: System[] = []
 
     public awake(): void {
@@ -77,5 +81,9 @@ export class Engine implements IAwake, IUpdate {
     public getSystem<C extends System>(constr: Class<C>): C { return this.systems.find(system => system instanceof constr) as C }
 
     public addSystem(system: System): void { this.systems.push(system) }
+
+    // Config
+
+    public get config(): { [key: string]: any } { return this._config }
 
 }

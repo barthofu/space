@@ -6,7 +6,7 @@ import { randomizeWithinRange } from "@utils/functions"
  * @param minRadius Radius of the deepest valley
  * @param maxRadius Radius of the highest montain
  */
-export function generateAsteroidShape(numberOfNodes: number, minRadius: number, maxRadius: number) {
+export function generateAsteroidShape(numberOfNodes: number, minRadius: number, maxRadius: number): number[][] {
 
     numberOfNodes = randomizeWithinRange(numberOfNodes, 5)
     const shape = []
@@ -22,7 +22,10 @@ export function generateAsteroidShape(numberOfNodes: number, minRadius: number, 
 }
 
 
-export function generateTriangleShape(position: vector) {
-
+export function generateTriangleShape(position: vector): number[][] {
     return [[-position.x, position.y], [0, -position.y], [position.x, position.y], [position.x, position.y]]
+}
+
+export function generateSquareShape(position: vector): number[][] {
+    return [[-position.x, -position.y], [-position.x, position.y], [position.x, position.y], [position.x, -position.y]]
 }

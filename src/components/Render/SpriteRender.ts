@@ -9,7 +9,7 @@ export class SpriteRender extends Render {
     constructor(asset: string, size: size, sizeOffset: size = { width: 0, height: 0 }) {
         super()
 
-        this.asset = asset
+        this.asset = 'assets/' + asset
         this.size = size
         this.sizeOffset = sizeOffset
     }

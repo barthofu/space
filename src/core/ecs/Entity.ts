@@ -1,13 +1,13 @@
 import { Component } from "./Component"
 import { v4 as uuidv4 } from "uuid"
+import { EntitiesManager } from "../../utils/classes"
 
-export abstract class Entity {
+export abstract class Entity extends EntitiesManager {
 
     protected _components : Component[] = []
 	protected _id: string = uuidv4()
 	protected _tag: string | undefined
-	protected _childs: Entity[] = []
-	protected _parent: Entity | undefined
+	protected _parentEntity: Entity | undefined
 
 	// Id
 	
@@ -30,28 +30,14 @@ export abstract class Entity {
 		return this._tag
 	}
 
-	// Childs
-
-	public addChild(child: Entity) {
-		this._childs.push(child)
-	}
-
-	public removeChild(child: Entity) {
-		this._childs = this._childs.filter(c => c !== child)
-	}
-
-	public get childs() : Entity[] {
-		return this._childs
-	}
-
 	// Parent
 
-	public set parent(parent: Entity | undefined) {
-		this._parent = parent
+	public set parentEntity(parent: Entity | undefined) {
+		this._parentEntity = parent
 	}
 
-	public get parent() : Entity | undefined {
-		return this._parent
+	public get parentEntity() : Entity | undefined {
+		return this._parentEntity
 	}
 
 	// Components 

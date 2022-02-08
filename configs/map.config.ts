@@ -1,8 +1,15 @@
 export const mapConfig = {
 
-    // The size of the map in pixels
     size: {
         width: 10000,
         height: 10000
+    },
+
+    scale: 5,
+
+    solarSystem: {
+
+        minPlanets: 4,
+        maxPlanets: 6,
     }
 }

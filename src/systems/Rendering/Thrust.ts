@@ -2,7 +2,7 @@ import { System } from "@ecs"
 import { Transform, CircleRender } from "@components"
 import { Particle } from "@entities"
 
-import { gameConfig } from "@configs"
+import { gameConfig, mapConfig } from "@configs"
 import { degreesToRadians, randomizeWithinRange, adjustAlpha } from "@utils/functions"
 
 export class Thrust extends System {
@@ -49,7 +49,7 @@ export class Thrust extends System {
                 }
 
         const particle = new Particle({
-            size: randomizeWithinRange(gameConfig.thrust.particles.size, 5),
+            size: randomizeWithinRange(gameConfig.thrust.particles.size, 0.5),
             position: { ...particlePosition },
             velocity: particleVelocity,
             color: `rgba(255, 255, 255, ${randomizeWithinRange(0.5, 0.3)})`,

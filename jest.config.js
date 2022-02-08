@@ -19,6 +19,6 @@ module.exports = {
     '**/*.spec.(js|ts)'
   ],
   roots: [
-    '<rootDir>/src'
+    '<rootDir>'
   ]
 }

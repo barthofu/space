@@ -8,6 +8,7 @@ export class InputsHandler {
 
         window.addEventListener('keydown', this.onKeyDown.bind(this))
         window.addEventListener('keyup', this.onKeyUp.bind(this))
+        window.addEventListener('wheel', this.wheelHandler.bind(this))
     }
 
     public isKeyDown(key: string): boolean {
@@ -20,5 +21,13 @@ export class InputsHandler {
 
     private onKeyUp(e: KeyboardEvent): void {
         this.pressedKeys[e.key] = false
+    }
+
+    private wheelHandler(e: WheelEvent): void {
+        if (e.deltaY > 0) {
+            engine.config.scale += 0.1
+        } else {
+            engine.config.scale -= 0.1
+        }
     }
 }
