@@ -56,7 +56,7 @@ export class MainScene extends Scene {
             },
             size: gameConfig.spaceship.size,
             health: gameConfig.spaceship.health,
-            color: { outline: 'white' }
+            color: { outline: 'white', fill: 'rgba(255, 255, 255, 0.2)' }
         }))
         this.addEntity(new Camera(true))
 
