@@ -62,7 +62,8 @@ export const gameConfig = {
 
         size: {
             min: 20,
-            max: 50
+            max: 50,
+            offset: 1.4
         },
 
         speed: {
@@ -81,7 +82,7 @@ export const gameConfig = {
 
     sun: {
 
-        sizeOffset: 1.6,
+        sizeOffset: 1.55,
     }
 
 }
