@@ -9,7 +9,7 @@ import {
 } from '@entities'
 import * as systems from '@systems'
 import { mapConfig, gameConfig } from '@configs'
-import { getRandomInt, getScaledSize, randomizeWithinRange } from '@utils/functions'
+import { getAngularPosition, getRandomInt, getScaledSize, randomizeWithinRange } from '@utils/functions'
 import { CircleRender, Transform } from '@components'
 import { Entity } from '@core/ecs'
 
@@ -136,7 +136,11 @@ export class MainScene extends Scene {
             // create the planet entity
             const planetEntity = new Planet({
                 asset: `planets/planet_${planet.color}.png`,
-                position: { x: position.x + planet.distance, y: position.y },
+                position: getAngularPosition(
+                    { x: position.x + planet.distance, y: position.y },
+                    position,
+                    getRandomInt(0, 360)
+                ),
                 size: planet.size,
                 rotationSpeed: planet.rotationSpeed,
                 sizeOffset: 1.5,

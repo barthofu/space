@@ -25,9 +25,11 @@ export class InputsHandler {
 
     private wheelHandler(e: WheelEvent): void {
         if (e.deltaY > 0) {
-            engine.config.scale += 0.1
+            if (engine.config.scale < 20)
+                engine.config.scale += 0.1
         } else {
-            engine.config.scale -= 0.1
+            if (engine.config.scale > 1)
+                engine.config.scale -= 0.1
         }
     }
 }
