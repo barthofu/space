@@ -25,9 +25,9 @@ export class MainScene extends Scene {
         new systems.Thrust(),
         new systems.CollisionsManager(),
         new systems.CenterCamera(),
-        //new systems.RenderCollisions(),
         new systems.DrawOrbits(),
         new systems.Renderer(),
+        //new systems.RenderCollisions(),
         new systems.Debug()
     ]
     private ignoreZones: {
@@ -143,7 +143,7 @@ export class MainScene extends Scene {
                 ),
                 size: planet.size,
                 rotationSpeed: planet.rotationSpeed,
-                sizeOffset: 1.5,
+                sizeOffset: gameConfig.planet.size.offset,
                 sunRef: sun
             })
 

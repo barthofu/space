@@ -76,8 +76,11 @@ export class CollisionsManager extends System {
 
         if (entity.tag === 'player' && otherEntity.hasComponent(PhysicalBody)) {
 
-            entity.getComponent(Transform)!.velocity.x = - entity.getComponent(Transform)!.velocity.x + physicsConfig.collisions.knockbackStrength * deltaTime
-            entity.getComponent(Transform)!.velocity.y = - entity.getComponent(Transform)!.velocity.y + physicsConfig.collisions.knockbackStrength * deltaTime
+            const entityTransform = entity.getComponent(Transform)!
+
+            entityTransform.velocity.x = - entityTransform.velocity.x + physicsConfig.collisions.knockbackStrength * deltaTime
+            entityTransform.velocity.y = - entityTransform.velocity.y + physicsConfig.collisions.knockbackStrength * deltaTime
+            entityTransform.velocity.rotation = (Math.random() > 0.5 ? 1 : -1) * physicsConfig.collisions.knockbackStrength * 20
         }
 
     }

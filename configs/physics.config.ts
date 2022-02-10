@@ -11,7 +11,7 @@ export const physicsConfig = {
     },
 
     collisions: {
-        knockbackStrength: 1, // must be less than 1
+        knockbackStrength: 0.8, // must be less than 1
     }
 
 }

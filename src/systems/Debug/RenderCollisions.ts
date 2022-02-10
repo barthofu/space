@@ -1,7 +1,7 @@
 import { System } from '@ecs'
 import { Collider, Transform } from '@components'
 
-import { drawCircle, worldToCanvasCoordinates } from '@utils/functions'
+import { drawCircle, getScaledPosition, getScaledRadius, worldToCanvasCoordinates } from '@utils/functions'
 import { gameConfig } from '@configs'
 
 export class RenderCollisions extends System {
@@ -18,11 +18,14 @@ export class RenderCollisions extends System {
                 const transform = entity.getComponent(Transform)!, 
                       collider = entity.getComponent(Collider)!
 
+                const position = getScaledPosition(transform.position),
+                      cameraPosition = getScaledPosition(cameraTransform.position)
+
                 drawCircle({
-                    position: worldToCanvasCoordinates(transform.position, cameraTransform.position, gameConfig.window),
-                    radius: collider.radius,
+                    position: worldToCanvasCoordinates(position, cameraTransform.position, gameConfig.window),
+                    radius: getScaledRadius(collider.radius),
                     color: {
-                        outline: 'white'
+                        outline: 'red'
                     }
                 })
             }
