@@ -1,5 +1,6 @@
 import { System } from '@ecs'
 import { RotationAroundEntity, Transform } from '@components'
+import { getAngularPosition } from '@utils/functions'
 
 export class MoveEntitiesAround extends System {
 
@@ -13,12 +14,14 @@ export class MoveEntitiesAround extends System {
                       rotationAroundEntity = entity.getComponent(RotationAroundEntity)!,
                       originEntityTransform = rotationAroundEntity.originEntity.getComponent(Transform)!
 
-                const angle = ( Math.PI / 180 ) * rotationAroundEntity.speed * _deltaTime,
-                      deltaX = transform.position.x - originEntityTransform.position.x,
-                      deltaY = transform.position.y - originEntityTransform.position.y
+                const newPosition = getAngularPosition(
+                    transform.position,
+                    originEntityTransform.position,
+                    rotationAroundEntity.speed * _deltaTime
+                )
 
-                transform.position.x = deltaX * Math.cos(angle) + deltaY * Math.sin(angle) + originEntityTransform.position.x
-                transform.position.y = - deltaX * Math.sin(angle) + deltaY * Math.cos(angle) + originEntityTransform.position.y
+                transform.position.x = newPosition.x
+                transform.position.y = newPosition.y
             }
         }
     }

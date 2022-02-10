@@ -8,6 +8,12 @@ export class Entity extends EntitiesManager {
 	protected _id: string = uuidv4()
 	protected _tag: string | undefined
 	protected _parentEntity: Entity | undefined
+	protected _createdAt: number
+
+	constructor() {
+		super()
+		this._createdAt = Date.now()
+	}
 
 	// Id
 	
