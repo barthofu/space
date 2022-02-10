@@ -12,7 +12,7 @@ export class Planet extends Entity {
         // convert size to radius
         const radius = size / 2
 
-        this.addComponent(new Transform(position, 0, {x: 0, y: 0, rotation: 1}))
+        this.addComponent(new Transform(position, 0, {x: 0, y: 0, rotation: 3 / size }))
         this.addComponent(new Collider(radius))
         this.addComponent(new PhysicalBody())
         this.addComponent(new SpriteRender(asset, { width: size, height: size }, { width: sizeOffset, height: sizeOffset }))

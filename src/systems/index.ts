@@ -11,6 +11,7 @@ export * from './Bullet/BulletManager'
 export * from './Rendering/Thrust'
 export * from './Rendering/Renderer'
 export * from './Rendering/ClearCanvas'
+export * from './Rendering/DrawOrbits'
 
 export * from './Debug/RenderCollisions'
 export * from './Debug/Debug'

@@ -8,9 +8,6 @@ export class EntitiesManager {
     
     public addEntity(entity: Entity): void { 
         this.entities.push(entity) 
-        if (entity.entities.length > 0) {
-            entity.entities.forEach(child => this.addEntity(child))
-        }
     }
 
     public removeEntity(entity: Entity): void {
@@ -20,11 +17,11 @@ export class EntitiesManager {
         }
     }
 
-    public getEntitiesByTag(tag: string): Entity[] { return this.entities.filter(entity => entity.tag === tag) }
+    public getEntitiesByTag(tag: string): Entity[] { return this.getAllEntities().filter(entity => entity.tag === tag) }
 
-    public getEntityById(id: string): Entity | undefined { return this.entities.find(entity => entity.id === id) }
+    public getEntityById(id: string): Entity | undefined { return this.getAllEntities().find(entity => entity.id === id) }
 
-    public getEntities<C extends Entity>(constr: Class<C>): C[] { return this.entities.filter(entity => entity instanceof constr) as C[] }
+    public getEntities<C extends Entity>(constr: Class<C>): C[] { return this.getAllEntities().filter(entity => entity instanceof constr) as C[] }
 
     public getAllEntities(): Entity[] { 
 
