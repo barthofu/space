@@ -1,12 +1,11 @@
 import { System } from '@ecs'
 import { Transform } from '@components'
-import { mapConfig } from '@configs'
 
 export class MoveEntities extends System {
 
     public update(_deltaTime: number): void {
 
-        for (const entity of engine.entities) {
+        for (const entity of engine.scene.getAllEntities()) {
 
             if (entity.matchComponents([Transform], [])) {
 

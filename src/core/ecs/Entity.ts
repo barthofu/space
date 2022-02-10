@@ -2,7 +2,7 @@ import { Component } from "./Component"
 import { v4 as uuidv4 } from "uuid"
 import { EntitiesManager } from "../../utils/classes"
 
-export abstract class Entity extends EntitiesManager {
+export class Entity extends EntitiesManager {
 
     protected _components : Component[] = []
 	protected _id: string = uuidv4()

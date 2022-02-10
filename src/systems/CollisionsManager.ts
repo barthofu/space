@@ -34,7 +34,7 @@ export class CollisionsManager extends System {
 
         const collidableEntities: Entity[] = []
 
-        for (const entity of engine.entities) {
+        for (const entity of engine.scene.getAllEntities()) {
             if (entity.matchComponents([Transform, Collider], [])) collidableEntities.push(entity)
         }
 

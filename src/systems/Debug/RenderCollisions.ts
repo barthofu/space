@@ -11,7 +11,7 @@ export class RenderCollisions extends System {
         const camera = engine.scene.getEntitiesByTag('mainCamera')[0],
               cameraTransform = camera.getComponent(Transform)!
 
-        for (const entity of engine.entities) {
+        for (const entity of engine.scene.getAllEntities()) {
 
             if (entity.matchComponents([Transform, Collider], [])) {
                 

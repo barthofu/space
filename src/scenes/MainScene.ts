@@ -10,7 +10,8 @@ import {
 import * as systems from '@systems'
 import { mapConfig, gameConfig } from '@configs'
 import { getRandomInt, getScaledSize, randomizeWithinRange } from '@utils/functions'
-import { Transform } from '@components'
+import { CircleRender, Transform } from '@components'
+import { Entity } from '@core/ecs'
 
 export class MainScene extends Scene {
 
@@ -25,6 +26,7 @@ export class MainScene extends Scene {
         new systems.CollisionsManager(),
         new systems.CenterCamera(),
         //new systems.RenderCollisions(),
+        new systems.DrawOrbits(),
         new systems.Renderer(),
         new systems.Debug()
     ]
@@ -97,7 +99,7 @@ export class MainScene extends Scene {
                 size: planetSize,
                 distance: randomizeWithinRange((i + 1) * gameConfig.planet.size.max * 1.5, 0) + sunSize / 2,
                 color: planetColor,
-                rotationSpeed: (numberOfPlanets - i) * gameConfig.planet.speed.coeff * (Math.random() > 0.5 ? 1 : -1)
+                rotationSpeed: (numberOfPlanets - i) * gameConfig.planet.speed.coeff * 2
             }
         })
 
@@ -130,14 +132,25 @@ export class MainScene extends Scene {
         solarSystem.addEntity(sun)
 
         for (const planet of planets) {
-            solarSystem.addEntity(new Planet({
+
+            // create the planet entity
+            const planetEntity = new Planet({
                 asset: `planets/planet_${planet.color}.png`,
                 position: { x: position.x + planet.distance, y: position.y },
                 size: planet.size,
                 rotationSpeed: planet.rotationSpeed,
                 sizeOffset: 1.5,
                 sunRef: sun
-            }))
+            })
+
+            // add the orbit of the planet as an entity
+            const orbitEntity = new Entity()
+            orbitEntity.addComponent(new Transform(position, 0, { x: 0, y: 0, rotation: 0 }))
+            orbitEntity.addComponent(new CircleRender(planet.distance, { outline: 'rgba(255,255,255,0.25)' }))
+            orbitEntity.tag = `orbit_${planetEntity.id}`
+
+            solarSystem.addEntity(orbitEntity)
+            solarSystem.addEntity(planetEntity)
         }
 
         this.addEntity(solarSystem)
