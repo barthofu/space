@@ -10,9 +10,6 @@ export class Camera extends Entity {
 
         if (isMainCamera) this.tag = 'mainCamera'
 
-        this.addComponent(new Transform({
-            x: mapConfig.size.width / 2,
-            y: mapConfig.size.height / 2
-        }))
+        this.addComponent(new Transform())
     }
 }

@@ -5,7 +5,8 @@ import {
     Asteroid,
     Planet,
     Sun,
-    SolarSystem
+    SolarSystem,
+    Background
 } from '@entities'
 import * as systems from '@systems'
 import { mapConfig, gameConfig } from '@configs'
@@ -24,6 +25,7 @@ export class MainScene extends Scene {
         new systems.BulletManager(),
         new systems.Thrust(),
         new systems.CollisionsManager(),
+        new systems.CenterBackground(),
         new systems.CenterCamera(),
         new systems.DrawOrbits(),
         new systems.Renderer(),
@@ -48,6 +50,9 @@ export class MainScene extends Scene {
         // define the size of the galaxy
         this.size = getScaledSize(mapConfig.size)
 
+        this.addEntity(new Background())
+        this.addEntity(new Camera(true))
+        
         // spawn the player's spaceship
         this.addEntity(new Spaceship({
             position: {
@@ -58,8 +63,8 @@ export class MainScene extends Scene {
             health: gameConfig.spaceship.health,
             color: { outline: 'white', fill: 'rgba(255, 255, 255, 0.2)' }
         }))
-        this.addEntity(new Camera(true))
 
+        // generate the solar system
         this.generateSolarSystem()
 
         // set the spaceship position near to the solar system
@@ -73,24 +78,24 @@ export class MainScene extends Scene {
 
     private generateSolarSystem() {
         
-        // 1. Get the content of the solar system
+        // 1. get the content of the solar system
 
-        //     1.1. Size of the sun
+        //     1.1. size of the sun
         const sunSize = getRandomInt(gameConfig.planet.size.min * 3, gameConfig.planet.size.max * 2)
 
-        //     1.2. Number and properties of planets
+        //     1.2. number and properties of planets
         const numberOfPlanets = getRandomInt(mapConfig.solarSystem.minPlanets, mapConfig.solarSystem.maxPlanets)
         
-        //    1.3. Defining sizes of planets and their order
+        //    1.3. defining sizes of planets and their order
         const planetSizes = []
         for (let i = 0; i < numberOfPlanets; i++) planetSizes.push(getRandomInt(gameConfig.planet.size.min, gameConfig.planet.size.max))
         planetSizes.sort((a, b) => a - b)
 
-        //    1.4 Creating the objects of the planets
+        //    1.4 creating the objects of the planets
         const planetsColor = gameConfig.planet.colors
         const planets = planetSizes.map((planetSize, i) => {
 
-            // Get a random color, and then delete it to not have the same color twice in the solar system
+            // get a random color, and then delete it to not have the same color twice in the solar system
             const planetColorIndex = getRandomInt(0, gameConfig.planet.colors.length - 1)
             const planetColor = planetsColor[planetColorIndex]
             planetsColor.splice(planetColorIndex, 1)
@@ -103,10 +108,10 @@ export class MainScene extends Scene {
             }
         })
 
-        // 2. From the content, get the size of the solar system
+        // 2. from the content, get the size of the solar system
         const sizeOfTheSolarSystem = Math.max.apply(Math, planets.map(planet => planet.distance))
         
-        // 3. Get the position of the center of the galaxy, which can't conflict with :
+        // 3. get the position of the center of the galaxy, which can't conflict with :
         //    - the spaceship
         //    - other galaxies
         //    - the world limits
@@ -115,17 +120,17 @@ export class MainScene extends Scene {
 
         while (true) {
 
-            // 3.1. Get a random position
+            // 3.1. get a random position
             position = {
                 x: getRandomInt(0, this.size.width),
                 y: getRandomInt(0, this.size.height)
             }
 
-            // 3.2. Check if the position is valid
+            // 3.2. check if the position is valid
             if (this.isValidPosition(position, sizeOfTheSolarSystem)) break
         }
 
-        // 4. Now that we have its definition, we can actualy create the solar system
+        // 4. now that we have its definition, we can actualy create the solar system
         const solarSystem = new SolarSystem()
 
         const sun = new Sun({ position, size: sunSize })
@@ -169,7 +174,7 @@ export class MainScene extends Scene {
 
     private isValidPosition(position: vector, size: number) {
 
-        // 1. Check if the position is inside the galaxy
+        // 1. check if the position is inside the galaxy
         if (position.x - size / 2  < 0 || 
             position.x + size / 2 > this.size.width ||
             position.y - size / 2 < 0 ||
@@ -178,7 +183,7 @@ export class MainScene extends Scene {
             return false
         }
 
-        // 2. Check if the position is in the camera
+        // 2. check if the position is in the camera
         const camera = this.getEntitiesByTag('mainCamera')[0]!
         const cameraTransform = camera.getComponent(Transform)!
         const cameraPosition = cameraTransform.position
@@ -191,7 +196,7 @@ export class MainScene extends Scene {
             return false
         }
 
-        // 3. Check if the position is conflicting with an ignore zone
+        // 3. check if the position is conflicting with an ignore zone
         for (const ignoreZone of this.ignoreZones) {
 
             if (position.x - size / 2 < ignoreZone.x + ignoreZone.size / 2 &&
@@ -203,7 +208,7 @@ export class MainScene extends Scene {
             }
         }
 
-        // 4. If the position is valid, return true
+        // 4. if the position is valid, return true
         return true
     }
 

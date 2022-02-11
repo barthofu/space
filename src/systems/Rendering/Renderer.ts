@@ -17,7 +17,8 @@ export class Renderer extends System {
 
                 const transform = entity.getComponent(Transform)!
 
-                if (this.checkIfEntityIsInCameraArea(transform, cameraTransform) || true) {
+                if (this.checkIfEntityIsInCameraArea(transform, cameraTransform)) {
+
 
                     // convertion from world positions to canvas position
                     let position: vector = getScaledPosition(transform.position)
