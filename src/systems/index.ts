@@ -1,4 +1,5 @@
 export * from './CollisionsManager'
+export * from './SunHeat'
 
 export * from './Transform/ControlPlayer'
 export * from './Transform/CenterCamera'

@@ -83,6 +83,11 @@ export const gameConfig = {
     sun: {
 
         sizeOffset: 1.55,
+
+        heat: {
+            distance: 50,
+            damages: 1 // damages per seconds, multiplied by 1 / distance 
+        }
     }
 
 }
