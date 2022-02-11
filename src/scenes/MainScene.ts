@@ -25,6 +25,7 @@ export class MainScene extends Scene {
         new systems.BulletManager(),
         new systems.Thrust(),
         new systems.CollisionsManager(),
+        new systems.SunHeat(),
         new systems.CenterBackground(),
         new systems.CenterCamera(),
         new systems.DrawOrbits(),
