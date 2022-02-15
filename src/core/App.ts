@@ -10,17 +10,17 @@ export default class App {
         const engine = new Engine()
         globalThis.engine = engine
         
-        this.loadFirstScene()
+        this.loadFirstScene('mainScene')
         this.setCanvasContext()
 
         // start the engine
         engine.awake()
     }
 
-    private loadFirstScene(): void {
+    private loadFirstScene(sceneName: string): void {
         
         engine.sceneManager.loadScenes()
-        engine.sceneManager.loadScene('mainScene')
+        engine.sceneManager.loadScene(sceneName)
     }
 
     private setCanvasContext(): void {

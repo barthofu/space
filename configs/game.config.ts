@@ -80,7 +80,7 @@ export const gameConfig = {
         ]
     },
 
-    sun: {
+    star: {
 
         sizeOffset: 1.55,
 
