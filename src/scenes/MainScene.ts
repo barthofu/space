@@ -4,7 +4,7 @@ import {
     Camera,
     Asteroid,
     Planet,
-    Sun,
+    Star,
     SolarSystem,
     Background
 } from '@entities'
@@ -25,7 +25,7 @@ export class MainScene extends Scene {
         new systems.BulletManager(),
         new systems.Thrust(),
         new systems.CollisionsManager(),
-        new systems.SunHeat(),
+        new systems.StarHeat(),
         new systems.CenterBackground(),
         new systems.CenterCamera(),
         new systems.DrawOrbits(),
@@ -81,8 +81,8 @@ export class MainScene extends Scene {
         
         // 1. get the content of the solar system
 
-        //     1.1. size of the sun
-        const sunSize = getRandomInt(gameConfig.planet.size.min * 3, gameConfig.planet.size.max * 2)
+        //     1.1. size of the star
+        const starSize = getRandomInt(gameConfig.planet.size.min * 3, gameConfig.planet.size.max * 2)
 
         //     1.2. number and properties of planets
         const numberOfPlanets = getRandomInt(mapConfig.solarSystem.minPlanets, mapConfig.solarSystem.maxPlanets)
@@ -103,7 +103,7 @@ export class MainScene extends Scene {
 
             return {
                 size: planetSize,
-                distance: randomizeWithinRange((i + 1) * gameConfig.planet.size.max * 1.5, 0) + sunSize / 2,
+                distance: randomizeWithinRange((i + 1) * gameConfig.planet.size.max * 1.5, 0) + starSize / 2,
                 color: planetColor,
                 rotationSpeed: (numberOfPlanets - i) * gameConfig.planet.speed.coeff * 2
             }
@@ -134,8 +134,8 @@ export class MainScene extends Scene {
         // 4. now that we have its definition, we can actualy create the solar system
         const solarSystem = new SolarSystem()
 
-        const sun = new Sun({ position, size: sunSize })
-        solarSystem.addEntity(sun)
+        const star = new Star({ position, size: starSize })
+        solarSystem.addEntity(star)
 
         for (const planet of planets) {
 
@@ -150,7 +150,7 @@ export class MainScene extends Scene {
                 size: planet.size,
                 rotationSpeed: planet.rotationSpeed,
                 sizeOffset: gameConfig.planet.size.offset,
-                sunRef: sun
+                starRef: star
             })
 
             // add the orbit of the planet as an entity
