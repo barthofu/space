@@ -1,4 +1,4 @@
-import { Planet, SolarSystem, Sun } from '@entities'
+import { Planet, SolarSystem, Star } from '@entities'
 import { Transform } from '@components'
 import { System } from '@ecs'
 
@@ -12,8 +12,8 @@ export class DrawOrbits extends System {
 
         for (const solarSystem of solarSystems) {
 
-            const sun = solarSystem.getEntities(Sun)[0]!
-            const sunTransform = sun.getComponent(Transform)!
+            const star = solarSystem.getEntities(Star)[0]!
+            const starTransform = star.getComponent(Transform)!
 
             const planets = solarSystem.getEntities(Planet)
 
@@ -21,10 +21,10 @@ export class DrawOrbits extends System {
 
                 const planetTransform = planet.getComponent(Transform)!
 
-                const distance = Math.sqrt(Math.pow(sunTransform.position.x - planetTransform.position.x, 2) + Math.pow(sunTransform.position.y - planetTransform.position.y, 2))
+                const distance = Math.sqrt(Math.pow(starTransform.position.x - planetTransform.position.x, 2) + Math.pow(starTransform.position.y - planetTransform.position.y, 2))
             
                 drawCircle({
-                    position: getScaledPosition(sunTransform.position),
+                    position: getScaledPosition(starTransform.position),
                     radius: getScaledRadius(distance),
                     color: {
                         outline: '#ffffff',
